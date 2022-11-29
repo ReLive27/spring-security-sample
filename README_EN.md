@@ -35,9 +35,9 @@ This module contains articles about [Spring Security](https://spring.io/projects
 
 ## Version
 
-| Spring Boot   | Spring Cloud   |
-| ---------------- | ----------------- |
-| 2.6.7            | 2021.0.2          |
+| Spring Boot   | Spring Cloud   |  Spring Security   |
+| ---------------- | ----------------- | ------    |
+| 2.7.6           | 2021.0.5          |  5.7.5  |
 
 ## Building from Source
 
