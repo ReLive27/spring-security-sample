@@ -1,5 +1,4 @@
-## <font size="6p">spring-security-sample</font> <font size="3p">  | [English Documentation](README_EN.md)</font>
-
+# <font size="6p">spring-security-sample</font> <font size="5p">  | [English Documentation](README_EN.md)</font>
 
 <p align="left">
 	<a href="https://github.com/ReLive27/spring-security-sample/stargazers"><img src="https://img.shields.io/github/stars/ReLive27/spring-security-sample?style=flat-square&logo=GitHub"></a>
@@ -9,11 +8,11 @@
 	<a href="https://github.com/ReLive27/spring-security-sample/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ReLive27/spring-security-sample.svg?style=flat-square"></a>
 </p>
 
-该模块包含有关 Spring Security 的文章。
+该模块包含有关 [Spring Security](https://spring.io/projects/spring-security) 的文章。
 
 > 注意：该工程处于孵化中，待大部分代码实现将会更新工程。
 
-### 相关文章:
+## 相关文章:
 
 - [（待更新）Spring Security 多因素认证（MFA）]()
 - [（待更新）使用Spring Security防止暴力验证尝试]()
@@ -34,16 +33,39 @@
 - [（待更新）Spring Security SAML和数据库身份验证]()
 - [（待更新）Spring Security 使用 OPA 做出 API 授权决策]()
 
-### 构建和部署项目:
+## 版本
 
-```
-mvn clean install
-```
-
-这是一个 Spring Boot 项目，因此您只需使用主类即可部署它。
-
-### 版本
-
-| spring boot 版本  | spring cloud 版本  |
+| Spring Boot 版本  | Spring Cloud 版本  |
 | ---------------- | ----------------- |
 | 2.6.7            | 2021.0.2          |
+
+## 构建项目
+
+spring-security-sample 使用基于 [Maven](https://maven.apache.org/) 的构建系统。
+
+### 先决条件
+
+[Git](https://help.github.com/set-up-git-redirect) 和 [JDK8](https://www.oracle.com/technetwork/java/javase/downloads)
+构建.
+
+确保您的JAVA_HOME环境变量指向jdk1.8.0从 JDK 下载中提取的文件夹。
+
+### 检查来源
+
+```
+git clone git@github.com:ReLive27/spring-security-sample.git
+```
+
+### 构建并安装项目：
+
+```
+./mvn clean install
+```
+
+## 贡献
+
+非常欢迎[提出请求](https://help.github.com/articles/creating-a-pull-request) 。
+
+## 许可
+
+spring-security-sample 是在 [Apache 2.0 许可](https://www.apache.org/licenses/LICENSE-2.0.html) 下发布的开源软件 。

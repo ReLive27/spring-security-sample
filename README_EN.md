@@ -1,4 +1,4 @@
-## <font size="6p">spring-security-sample</font> <font size="3p">  | [中文文档](README.md)</font>
+# <font size="6p">spring-security-sample</font> <font size="5p">  | [中文文档](README.md)</font>
 
 <p align="left">
 	<a href="https://github.com/ReLive27/spring-security-sample/stargazers"><img src="https://img.shields.io/github/stars/ReLive27/spring-security-sample?style=flat-square&logo=GitHub"></a>
@@ -8,11 +8,11 @@
 	<a href="https://github.com/ReLive27/spring-security-sample/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ReLive27/spring-security-sample.svg?style=flat-square"></a>
 </p>
 
-This module contains articles about Spring Security
+This module contains articles about [Spring Security](https://spring.io/projects/spring-security)
 
 > Note: This project is in incubation, and the project will be updated when most of the code is implemented.
 
-### Relevant Articles:
+## Relevant Articles:
 
 - [（pending upgrade）Spring Security Multi-Factor Authentication (MFA)]()
 - [（pending upgrade）Prevent brute force authentication attempts with Spring Security]()
@@ -33,16 +33,40 @@ This module contains articles about Spring Security
 - [（pending upgrade）Spring Security SAML and database authentication]()
 - [（pending upgrade）Spring Security uses OPA to make API authorization decisions]()
 
-### Build and Deploy the Project:
+## Version
 
-```
-mvn clean install
-```
-
-This is a Spring Boot project, so you can deploy it with just the main class.
-
-### Version
-
-| spring boot   | spring cloud   |
+| Spring Boot   | Spring Cloud   |
 | ---------------- | ----------------- |
 | 2.6.7            | 2021.0.2          |
+
+## Building from Source
+
+spring-security-sample uses a [Maven](https://maven.apache.org/) based build system.
+
+### Prerequisites
+
+[Git](https://help.github.com/set-up-git-redirect) and
+the [JDK8 build](https://www.oracle.com/technetwork/java/javase/downloads).
+
+Be sure that your `JAVA_HOME` environment variable points to the `jdk1.8.0` folder extracted from the JDK download.
+
+### Check out sources
+
+```
+git clone git@github.com:ReLive27/spring-security-sample.git
+```
+
+### Build and Install the Project:
+
+```
+./mvn clean install
+```
+
+## Contributing
+
+[Pull requests](https://help.github.com/articles/creating-a-pull-request) are welcome.
+
+## License
+
+spring-security-sample is Open Source software released under the
+[Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0.html).
