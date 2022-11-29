@@ -5,7 +5,7 @@
 	<a href="https://github.com/ReLive27/spring-security-sample/network/members"><img src="https://img.shields.io/github/forks/ReLive27/spring-security-sample?style=flat-square&logo=GitHub"></a>
 	<a href="https://github.com/ReLive27/spring-security-sample/watchers"><img src="https://img.shields.io/github/watchers/ReLive27/spring-security-sample?style=flat-square&logo=GitHub"></a>
 	<a href="https://github.com/ReLive27/spring-security-sample/issues"><img src="https://img.shields.io/github/issues/ReLive27/spring-security-sample.svg?style=flat-square&logo=GitHub"></a>
-	<a href="https://github.com/ReLive27/spring-security-sample/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ReLive27/spring-security-sample.svg?style=flat-square"></a>
+	<a href="https://github.com/ReLive27/spring-security-sample/blob/master/LICENSE"><img src="https://img.shields.io/github/license/ReLive27/spring-security-sample.svg?style=flat-square"></a>
 </p>
 
 该模块包含有关 [Spring Security](https://spring.io/projects/spring-security) 的文章。
