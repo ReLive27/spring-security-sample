@@ -5,6 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>cas-login</module>
+        <module>mfa-login</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
