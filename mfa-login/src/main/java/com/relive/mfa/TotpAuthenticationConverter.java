@@ -25,15 +25,11 @@ public class TotpAuthenticationConverter implements AuthenticationConverter {
     @Override
     public Authentication convert(HttpServletRequest request) {
 
-        String secret = this.obtainSecret(request);
-        if (!StringUtils.hasText(secret)) {
-            throw new TotpAuthenticationException("Totp secret parameter error", null);
-        }
-
         String username = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             username = authentication.getName();
+            authentication.setAuthenticated(false);
         } else {
 
             if (requestMatcher.matches(request)) {
@@ -41,7 +37,15 @@ public class TotpAuthenticationConverter implements AuthenticationConverter {
             }
         }
 
-        if (StringUtils.hasText(username)) {
+        if (!StringUtils.hasText(username)) {
+            return null;
+        }
+
+        String secret = this.obtainSecret(request);
+        if (StringUtils.hasText(secret)) {
+            if (authentication != null) {
+                authentication.setAuthenticated(true);
+            }
             return new TotpAuthenticationToken(username, secret);
         }
 

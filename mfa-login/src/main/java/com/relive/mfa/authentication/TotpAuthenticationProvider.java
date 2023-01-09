@@ -41,18 +41,18 @@ public class TotpAuthenticationProvider implements AuthenticationProvider {
 
         if (userDetails instanceof MfaUserDetails) {
             MfaUserDetails mfaUserDetails = (MfaUserDetails) userDetails;
-            if (mfaUserDetails.isMfa()) {
-                if (this.codeVerifier.isValidCode(mfaUserDetails.getSecret(),
+            if (mfaUserDetails.isEnableMfa()) {
+                if (!this.codeVerifier.isValidCode(mfaUserDetails.getSecret(),
                         totpAuthenticationToken.getCredentials())) {
 
-                    return new TotpAuthenticationToken(username, totpAuthenticationToken.getCredentials(), true);
+                    throw new TotpAuthenticationException("Code verification failed", null);
                 }
             }
 
-            return new TotpAuthenticationToken(username, totpAuthenticationToken.getCredentials(), false);
+            return new TotpAuthenticationToken(username, totpAuthenticationToken.getCredentials(), true);
 
         }
-        throw new TotpAuthenticationException("Code verification failed", null);
+        throw new TotpAuthenticationException("MfaUserDetails must be an instance of UserDetails", null);
     }
 
     @Override

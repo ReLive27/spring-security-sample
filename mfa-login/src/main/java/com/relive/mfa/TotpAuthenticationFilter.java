@@ -1,9 +1,18 @@
 package com.relive.mfa;
 
+import com.relive.mfa.authentication.TotpAuthenticationToken;
+import com.relive.mfa.context.TotpTokenContext;
+import com.relive.mfa.context.TotpTokenContextHolder;
+import com.relive.mfa.exception.TotpAuthenticationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationConverter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.Assert;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,6 +31,9 @@ public final class TotpAuthenticationFilter extends OncePerRequestFilter {
     private final AuthenticationManager authenticationManager;
     private final RequestMatcher requestMatcher;
     private AuthenticationConverter authenticationConverter;
+    private AuthenticationSuccessHandler authenticationSuccessHandler = this::onAuthenticationSuccess;
+    private AuthenticationFailureHandler authenticationFailureHandler = this::onAuthenticationFailure;
+
 
     public TotpAuthenticationFilter(AuthenticationManager authenticationManager,
                                     RequestMatcher requestMatcher) {
@@ -44,16 +56,44 @@ public final class TotpAuthenticationFilter extends OncePerRequestFilter {
             Authentication authentication = this.authenticationConverter.convert(request);
             if (authentication != null) {
                 Authentication authenticationResult = this.authenticationManager.authenticate(authentication);
-                //TODO authenticationSuccessHandler
+                this.authenticationSuccessHandler.onAuthenticationSuccess(request, response, authenticationResult);
             }
             filterChain.doFilter(request, response);
 
         } catch (AuthenticationException e) {
-            //TODO authenticationFailureHandler
+            this.authenticationFailureHandler.onAuthenticationFailure(request, response, e);
+        } finally {
+            TotpTokenContextHolder.resetTotpTokenContext();
         }
     }
 
     public void setAuthenticationConverter(AuthenticationConverter authenticationConverter) {
         this.authenticationConverter = authenticationConverter;
+    }
+
+    public void setAuthenticationSuccessHandler(AuthenticationSuccessHandler authenticationSuccessHandler) {
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+    }
+
+    public void setAuthenticationFailureHandler(AuthenticationFailureHandler authenticationFailureHandler) {
+        this.authenticationFailureHandler = authenticationFailureHandler;
+    }
+
+    private void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                         Authentication authentication) {
+        TotpAuthenticationToken totpAuthenticationToken = (TotpAuthenticationToken) authentication;
+        TotpTokenContext context = new TotpTokenContext(totpAuthenticationToken.isMfa());
+        TotpTokenContextHolder.setTotpTokenContext(context);
+    }
+
+    private void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                                         AuthenticationException exception) throws IOException {
+
+        if (exception instanceof TotpAuthenticationException) {
+            TotpAuthenticationException totpAuthenticationException = (TotpAuthenticationException) exception;
+            response.sendError(HttpStatus.BAD_REQUEST.value(), totpAuthenticationException.getMessage());
+            return;
+        }
+        response.sendError(HttpStatus.BAD_REQUEST.value(),"invalid code");
     }
 }
