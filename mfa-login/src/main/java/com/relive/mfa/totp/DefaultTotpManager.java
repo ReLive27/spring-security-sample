@@ -41,7 +41,7 @@ public class DefaultTotpManager implements TotpManager {
     }
 
     @Override
-    public boolean verifyCode(String secret, String code) {
+    public boolean validCode(String secret, String code) {
         return this.verifier.isValidCode(secret, code);
     }
 

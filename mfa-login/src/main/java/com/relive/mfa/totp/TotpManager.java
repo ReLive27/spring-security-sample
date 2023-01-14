@@ -8,7 +8,7 @@ public interface TotpManager {
 
     String generateSecret();
 
-    boolean verifyCode(String secret, String code);
+    boolean validCode(String secret, String code);
 
     String getUriForImage(String label, String secret, String issuer) throws Exception;
 
