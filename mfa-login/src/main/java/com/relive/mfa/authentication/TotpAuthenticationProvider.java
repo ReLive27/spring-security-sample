@@ -1,8 +1,8 @@
 package com.relive.mfa.authentication;
 
 import com.relive.mfa.exception.TotpAuthenticationException;
+import com.relive.mfa.totp.TotpManager;
 import com.relive.mfa.userdetails.MfaUserDetails;
-import dev.samstevens.totp.code.CodeVerifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -16,16 +16,16 @@ import org.springframework.util.Assert;
  * @date: 2023/1/7 22:52
  */
 public class TotpAuthenticationProvider implements AuthenticationProvider {
-    private final CodeVerifier codeVerifier;
+    private final TotpManager totpManager;
     private final UserDetailsService userDetailsService;
 
 
     public TotpAuthenticationProvider(UserDetailsService userDetailsService,
-                                      CodeVerifier codeVerifier) {
+                                      TotpManager totpManager) {
         Assert.notNull(userDetailsService, "userDetailsService cannot be null");
-        Assert.notNull(codeVerifier, "codeVerifier cannot be null");
+        Assert.notNull(totpManager, "totpManager cannot be null");
         this.userDetailsService = userDetailsService;
-        this.codeVerifier = codeVerifier;
+        this.totpManager = totpManager;
     }
 
 
@@ -42,7 +42,7 @@ public class TotpAuthenticationProvider implements AuthenticationProvider {
         if (userDetails instanceof MfaUserDetails) {
             MfaUserDetails mfaUserDetails = (MfaUserDetails) userDetails;
             if (mfaUserDetails.isEnableMfa()) {
-                if (!this.codeVerifier.isValidCode(mfaUserDetails.getSecret(),
+                if (!this.totpManager.validCode(mfaUserDetails.getSecret(),
                         totpAuthenticationToken.getCredentials())) {
 
                     throw new TotpAuthenticationException("Code verification failed", null);
