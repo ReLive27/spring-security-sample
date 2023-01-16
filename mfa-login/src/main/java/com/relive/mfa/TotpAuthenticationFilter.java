@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -94,6 +92,6 @@ public final class TotpAuthenticationFilter extends OncePerRequestFilter {
             response.sendError(HttpStatus.BAD_REQUEST.value(), totpAuthenticationException.getMessage());
             return;
         }
-        response.sendError(HttpStatus.BAD_REQUEST.value(),"invalid code");
+        response.sendError(HttpStatus.BAD_REQUEST.value(), "invalid code");
     }
 }
