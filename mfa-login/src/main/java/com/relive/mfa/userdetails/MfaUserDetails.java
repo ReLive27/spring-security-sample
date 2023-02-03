@@ -2,13 +2,14 @@ package com.relive.mfa.userdetails;
 
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
-import java.util.TreeSet;
+import java.io.Serializable;
+import java.util.*;
+import java.util.function.Function;
 
 /**
  * @author: ReLive
@@ -37,7 +38,7 @@ public class MfaUserDetails implements UserDetails, CredentialsContainer {
         this.accountNonExpired = accountNonExpired;
         this.credentialsNonExpired = credentialsNonExpired;
         this.accountNonLocked = accountNonLocked;
-        this.authorities = Collections.unmodifiableSet(new TreeSet(authorities));
+        this.authorities = Collections.unmodifiableSet(sortAuthorities(authorities));
         this.enableMfa = enableMfa;
         this.secret = secret;
     }
@@ -88,5 +89,147 @@ public class MfaUserDetails implements UserDetails, CredentialsContainer {
 
     public boolean isEnableMfa() {
         return enableMfa;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private static SortedSet<GrantedAuthority> sortAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        Assert.notNull(authorities, "Cannot pass a null GrantedAuthority collection");
+        SortedSet<GrantedAuthority> sortedAuthorities = new TreeSet(new MfaUserDetails.AuthorityComparator());
+        Iterator var2 = authorities.iterator();
+
+        while (var2.hasNext()) {
+            GrantedAuthority grantedAuthority = (GrantedAuthority) var2.next();
+            Assert.notNull(grantedAuthority, "GrantedAuthority list cannot contain any null elements");
+            sortedAuthorities.add(grantedAuthority);
+        }
+
+        return sortedAuthorities;
+    }
+
+    public static MfaUserDetails.UserBuilder withUsername(String username) {
+        return builder().username(username);
+    }
+
+    public static MfaUserDetails.UserBuilder builder() {
+        return new MfaUserDetails.UserBuilder();
+    }
+
+    public static final class UserBuilder {
+        private String username;
+        private String password;
+        private String secret;
+        private List<GrantedAuthority> authorities;
+        private boolean accountExpired;
+        private boolean accountLocked;
+        private boolean credentialsExpired;
+        private boolean disabled;
+        private boolean disableMfa;
+        private Function<String, String> passwordEncoder;
+
+        private UserBuilder() {
+            this.passwordEncoder = (password) -> {
+                return password;
+            };
+        }
+
+        public MfaUserDetails.UserBuilder username(String username) {
+            Assert.notNull(username, "username cannot be null");
+            this.username = username;
+            return this;
+        }
+
+        public MfaUserDetails.UserBuilder password(String password) {
+            Assert.notNull(password, "password cannot be null");
+            this.password = password;
+            return this;
+        }
+
+        public MfaUserDetails.UserBuilder secret(String secret) {
+            this.secret = secret;
+            return this;
+        }
+
+        public MfaUserDetails.UserBuilder passwordEncoder(Function<String, String> encoder) {
+            Assert.notNull(encoder, "encoder cannot be null");
+            this.passwordEncoder = encoder;
+            return this;
+        }
+
+        public MfaUserDetails.UserBuilder roles(String... roles) {
+            List<GrantedAuthority> authorities = new ArrayList(roles.length);
+            String[] var3 = roles;
+            int var4 = roles.length;
+
+            for (int var5 = 0; var5 < var4; ++var5) {
+                String role = var3[var5];
+                Assert.isTrue(!role.startsWith("ROLE_"), () -> {
+                    return role + " cannot start with ROLE_ (it is automatically added)";
+                });
+                authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+            }
+
+            return this.authorities(authorities);
+        }
+
+        public MfaUserDetails.UserBuilder authorities(GrantedAuthority... authorities) {
+            return this.authorities(Arrays.asList(authorities));
+        }
+
+        public MfaUserDetails.UserBuilder authorities(Collection<? extends GrantedAuthority> authorities) {
+            this.authorities = new ArrayList(authorities);
+            return this;
+        }
+
+        public MfaUserDetails.UserBuilder authorities(String... authorities) {
+            return this.authorities(AuthorityUtils.createAuthorityList(authorities));
+        }
+
+        public MfaUserDetails.UserBuilder accountExpired(boolean accountExpired) {
+            this.accountExpired = accountExpired;
+            return this;
+        }
+
+        public MfaUserDetails.UserBuilder accountLocked(boolean accountLocked) {
+            this.accountLocked = accountLocked;
+            return this;
+        }
+
+        public MfaUserDetails.UserBuilder credentialsExpired(boolean credentialsExpired) {
+            this.credentialsExpired = credentialsExpired;
+            return this;
+        }
+
+        public MfaUserDetails.UserBuilder disabled(boolean disabled) {
+            this.disabled = disabled;
+            return this;
+        }
+
+        public MfaUserDetails.UserBuilder disableMfa(boolean disableMfa) {
+            this.disableMfa = disableMfa;
+            return this;
+        }
+
+        public UserDetails build() {
+            String encodedPassword = this.passwordEncoder.apply(this.password);
+            return new MfaUserDetails(this.username, encodedPassword, !this.disableMfa, this.secret, !this.disabled, !this.accountExpired, !this.credentialsExpired, !this.accountLocked, this.authorities);
+        }
+    }
+
+    private static class AuthorityComparator implements Comparator<GrantedAuthority>, Serializable {
+
+        public int compare(GrantedAuthority g1, GrantedAuthority g2) {
+            if (g2.getAuthority() == null) {
+                return -1;
+            } else {
+                return g1.getAuthority() == null ? 1 : g1.getAuthority().compareTo(g2.getAuthority());
+            }
+        }
     }
 }
