@@ -14,7 +14,9 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.ServletException;
@@ -32,9 +34,14 @@ public class TotpMfaAuthenticationSuccessHandler implements AuthenticationSucces
     private final HttpMessageConverter<TotpMfaResponse> totpHttpMessageConverter =
             new TotpHttpMessageConverter();
     private final TokenGenerator<Jwt> tokenGenerator;
+    private final UserDetailsManager userDetailsManager;
 
-    public TotpMfaAuthenticationSuccessHandler(TokenGenerator<Jwt> tokenGenerator) {
+    public TotpMfaAuthenticationSuccessHandler(TokenGenerator<Jwt> tokenGenerator,
+                                               UserDetailsManager userDetailsManager) {
+        Assert.notNull(tokenGenerator, "tokenGenerator can not be null");
+        Assert.notNull(userDetailsManager, "userDetailsManager can not be null");
         this.tokenGenerator = tokenGenerator;
+        this.userDetailsManager = userDetailsManager;
     }
 
     @Override
@@ -45,7 +52,8 @@ public class TotpMfaAuthenticationSuccessHandler implements AuthenticationSucces
 
             if (!StringUtils.hasText(userDetails.getSecret())) {
                 String secret = toTpManager.generateSecret();
-                //TODO secret更新到数据库
+                userDetails.setSecret(secret);
+                this.userDetailsManager.updateUser(userDetails);
                 String uriForImage;
                 try {
                     uriForImage = toTpManager.getUriForImage(userDetails.getUsername(), secret, "http://127.0.0.1:8080");
