@@ -3,6 +3,7 @@ package com.relive.mfa.jwt;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
+import org.springframework.util.Assert;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -15,6 +16,7 @@ public final class JwtGenerator implements TokenGenerator<Jwt> {
     private final JwtEncoder jwtEncoder;
 
     public JwtGenerator(JwtEncoder jwtEncoder) {
+        Assert.notNull(jwtEncoder, "jwtEncoder can not be null");
         this.jwtEncoder = jwtEncoder;
     }
 
