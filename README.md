@@ -8,9 +8,8 @@
 	<a href="https://github.com/ReLive27/spring-security-sample/blob/master/LICENSE"><img src="https://img.shields.io/github/license/ReLive27/spring-security-sample.svg?style=flat-square"></a>
 </p>
 
-该模块包含有关 [Spring Security](https://spring.io/projects/spring-security) 的文章。
-
-> 注意：该工程处于孵化中，待大部分代码实现将会更新工程。
+这个项目是一个 [Spring Security](https://spring.io/projects/spring-security) 示例教程的集合。Spring Security
+是一个提供身份验证、授权和针对常见攻击的保护的框架。这里的模块涵盖了 Spring Security 的许多方面。
 
 ## 相关文章:
 

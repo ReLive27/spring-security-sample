@@ -8,9 +8,9 @@
 	<a href="https://github.com/ReLive27/spring-security-sample/blob/master/LICENSE"><img src="https://img.shields.io/github/license/ReLive27/spring-security-sample.svg?style=flat-square"></a>
 </p>
 
-This module contains articles about [Spring Security](https://spring.io/projects/spring-security)
-
-> Note: This project is in incubation, and the project will be updated when most of the code is implemented.
+This project is a collection of [Spring Security](https://spring.io/projects/spring-security) tutorials by example.
+Spring Security is a framework that provides authentication, authorization, and protection against common attacks. The
+modules here cover many aspects of Spring Security.
 
 ## Relevant Articles:
 
