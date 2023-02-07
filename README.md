@@ -31,6 +31,7 @@
 - [（待更新）Spring Security CAS单点登录]()
 - [（待更新）Spring Security SAML和数据库身份验证]()
 - [（待更新）Spring Security 使用 OPA 做出 API 授权决策]()
+- [（待更新）使用 Spring Security 和 Keycloak 保护应用程序]()
 
 ## 版本
 

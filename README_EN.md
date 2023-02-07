@@ -32,6 +32,7 @@ modules here cover many aspects of Spring Security.
 - [（pending upgrade）Spring Security CAS single sign-on]()
 - [（pending upgrade）Spring Security SAML and database authentication]()
 - [（pending upgrade）Spring Security uses OPA to make API authorization decisions]()
+- [（pending upgrade）Securing applications with Spring Security and Keycloak]()
 
 ## Version
 
