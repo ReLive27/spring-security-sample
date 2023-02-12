@@ -7,6 +7,7 @@
         <module>cas-login</module>
         <module>mfa-login</module>
         <module>prevent-brute-force</module>
+        <module>ldap-login</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
