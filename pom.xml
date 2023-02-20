@@ -9,6 +9,7 @@
         <module>prevent-brute-force</module>
         <module>ldap-login</module>
         <module>remember-me</module>
+        <module>saml2-login</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
