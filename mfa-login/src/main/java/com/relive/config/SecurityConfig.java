@@ -75,8 +75,8 @@ public class SecurityConfig {
 
     @Bean
     JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
-        ConfigurableJWTProcessor<SecurityContext> jwtProcessor = new DefaultJWTProcessor();
-        jwtProcessor.setJWSKeySelector(new JWSVerificationKeySelector(JWSAlgorithm.RS256, jwkSource));
+        ConfigurableJWTProcessor<SecurityContext> jwtProcessor = new DefaultJWTProcessor<>();
+        jwtProcessor.setJWSKeySelector(new JWSVerificationKeySelector<>(JWSAlgorithm.RS256, jwkSource));
         jwtProcessor.setJWTClaimsSetVerifier((claims, context) -> {
         });
         return new NimbusJwtDecoder(jwtProcessor);
