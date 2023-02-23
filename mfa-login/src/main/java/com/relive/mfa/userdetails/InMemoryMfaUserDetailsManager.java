@@ -40,11 +40,11 @@ public class InMemoryMfaUserDetailsManager implements UserDetailsService, UserDe
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetails user = this.users.get(username.toLowerCase());
+        MfaUserDetails user = (MfaUserDetails) this.users.get(username.toLowerCase());
         if (user == null) {
             throw new UsernameNotFoundException(username);
         } else {
-            return user;
+            return new MfaUserDetails(user.getUsername(), user.getPassword(), user.isEnableMfa(), user.getSecret(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(), user.getAuthorities());
         }
     }
 
