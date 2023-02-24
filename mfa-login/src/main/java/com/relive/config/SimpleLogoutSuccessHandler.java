@@ -26,7 +26,7 @@ public class SimpleLogoutSuccessHandler implements LogoutSuccessHandler {
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(contentType);
         Map<String, Object> responseClaims = new LinkedHashMap<>();
-        responseClaims.put("code", 20000);
+        responseClaims.put("code", HttpStatus.OK.value());
         responseClaims.put("message", "success");
         try (Writer writer = response.getWriter()) {
             writer.write(objectMapper.writeValueAsString(responseClaims));

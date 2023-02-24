@@ -1,5 +1,6 @@
 package com.relive.controler;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class UserController {
     @GetMapping("/user/info")
     public Map<String, Object> getUserInfo(@AuthenticationPrincipal Jwt jwt) {
         Map<String, Object> result = new HashMap<>();
-        result.put("code", 20000);
+        result.put("code", HttpStatus.OK.value());
         result.put("data", Collections.singletonMap("name", jwt.getClaim("sub")));
         return result;
 
