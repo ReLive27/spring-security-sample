@@ -14,7 +14,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -63,15 +63,17 @@ public class TotpHttpMessageConverter extends AbstractHttpMessageConverter<TotpM
         @Override
         public Map<String, Object> convert(TotpMfaResponse source) {
             Map<String, Object> responseClaims = new LinkedHashMap<>();
-            responseClaims.put("code", 20000);
+            responseClaims.put("code", source.getResponseCode());
             responseClaims.put("message", source.getMessage());
-            responseClaims.put("mfa", source.getMfa());
+            Map<String, Object> data = new HashMap<>();
+            data.put("mfa", source.getMfa());
             if (StringUtils.hasText(source.getQrCode())) {
-                responseClaims.put("qrCode", source.getQrCode());
+                data.put("qrCode", source.getQrCode());
             }
             if (StringUtils.hasText(source.getToken())) {
-                responseClaims.put("data", Collections.singletonMap("token", source.getToken()));
+                data.put("token", source.getToken());
             }
+            responseClaims.put("data", data);
             return responseClaims;
         }
     }

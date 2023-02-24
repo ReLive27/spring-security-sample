@@ -59,18 +59,17 @@ public class TotpMfaAuthenticationSuccessHandler implements AuthenticationSucces
                     uriForImage = toTpManager.getUriForImage(userDetails.getUsername(), secret, "http://127.0.0.1:8080");
                 } catch (Exception e) {
                     log.error("Error getting QR code image", e);
-                    TotpMfaResponse totpMfaResponse = TotpMfaResponse.unauthenticated("Error getting QR code image", "bind", null);
-                    response.setStatus(HttpStatus.BAD_REQUEST.value());
+                    TotpMfaResponse totpMfaResponse = TotpMfaResponse.unauthenticated("Error getting QR code image", "bind", HttpStatus.BAD_REQUEST, null);
                     this.sendTotpMfaResponse(request, response, totpMfaResponse);
                     return;
                 }
-                TotpMfaResponse totpMfaResponse = TotpMfaResponse.unauthenticated("The current account is not bound to the token app", "bind", uriForImage);
+                TotpMfaResponse totpMfaResponse = TotpMfaResponse.unauthenticated("The current account is not bound to the token app", "bind", HttpStatus.OK, uriForImage);
                 this.sendTotpMfaResponse(request, response, totpMfaResponse);
                 return;
             }
             TotpTokenContext totpTokenContext = TotpTokenContextHolder.getTotpTokenContext();
             if (totpTokenContext == null || !totpTokenContext.isMfa()) {
-                TotpMfaResponse totpMfaResponse = TotpMfaResponse.unauthenticated("dynamic password error", "enable", null);
+                TotpMfaResponse totpMfaResponse = TotpMfaResponse.unauthenticated("dynamic password error", "enable", HttpStatus.OK, null);
                 this.sendTotpMfaResponse(request, response, totpMfaResponse);
                 return;
             }
