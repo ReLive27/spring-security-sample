@@ -59,7 +59,7 @@ public class SecurityConfig {
         UserDetails userDetails = MfaUserDetails.withUsername("admin")
                 .password("{noop}password")
                 .authorities("ADMIN")
-                .disableMfa(true)
+                .disableMfa(false)
                 .build();
         return new InMemoryMfaUserDetailsManager(userDetails);
     }
