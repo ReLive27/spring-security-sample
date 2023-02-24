@@ -7,7 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.util.Assert;
@@ -20,7 +20,7 @@ import java.util.Map;
  * @date: 2023/2/3 19:58
  */
 @Slf4j
-public class InMemoryMfaUserDetailsManager implements UserDetailsService, UserDetailsManager {
+public class InMemoryMfaUserDetailsManager implements UserDetailsManager, UserDetailsPasswordService {
     private final Map<String, UserDetails> users = new HashMap();
     private AuthenticationManager authenticationManager;
 
@@ -93,5 +93,13 @@ public class InMemoryMfaUserDetailsManager implements UserDetailsService, UserDe
 
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
+    }
+
+    @Override
+    public UserDetails updatePassword(UserDetails user, String newPassword) {
+        String username = user.getUsername();
+        MfaUserDetails mfaUserDetails = (MfaUserDetails) this.users.get(username.toLowerCase());
+        mfaUserDetails.setPassword(newPassword);
+        return mfaUserDetails;
     }
 }
