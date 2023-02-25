@@ -5,5 +5,10 @@
 
 该模块所对应的Vue示例工程 [由此获取](https://github.com/ReLive27/spring-security-mfa-vue-template) 。
 
+## 演示
+
+![演示](https://github.com/ReLive27/ReLive27.github.io/blob/main/public/static/images/blogs/mfa-demo.gif)
+
+
 ## 相关文章:
 
