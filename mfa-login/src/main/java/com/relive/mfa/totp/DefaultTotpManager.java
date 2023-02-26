@@ -17,7 +17,7 @@ import static dev.samstevens.totp.util.Utils.getDataUriForImage;
  * @author: ReLive
  * @date: 2023/1/12 19:40
  */
-public class DefaultTotpManager implements TotpManager {
+public class DefaultTotpManager implements MfaAuthenticationManager {
     private static final int DEFAULT_SECRET_LENGTH = 64;
     private static final int DEFAULT_CODE_LENGTH = 6;
     private static final int DEFAULT_TIME_PERIOD = 30;

@@ -2,7 +2,7 @@ package com.relive.mfa.configure;
 
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import com.relive.mfa.handler.TotpMfaAuthenticationSuccessHandler;
+import com.relive.mfa.handler.MfaAuthenticationSuccessHandler;
 import com.relive.mfa.jwt.JwtGenerator;
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
@@ -48,7 +48,7 @@ public class MfaConfigurerUtils {
             }
             builder.setSharedObject(UserDetailsManager.class, userDetailsManager);
         }
-        return new TotpMfaAuthenticationSuccessHandler(new JwtGenerator(jwtEncoder), userDetailsManager);
+        return new MfaAuthenticationSuccessHandler(new JwtGenerator(jwtEncoder), userDetailsManager);
     }
 
     static <B extends HttpSecurityBuilder<B>> JWKSource<SecurityContext> getJwkSource(B builder) {

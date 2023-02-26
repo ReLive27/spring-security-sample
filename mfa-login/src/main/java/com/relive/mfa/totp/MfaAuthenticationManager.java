@@ -4,7 +4,7 @@ package com.relive.mfa.totp;
  * @author: ReLive
  * @date: 2023/1/12 19:27
  */
-public interface TotpManager {
+public interface MfaAuthenticationManager {
 
     String generateSecret();
 

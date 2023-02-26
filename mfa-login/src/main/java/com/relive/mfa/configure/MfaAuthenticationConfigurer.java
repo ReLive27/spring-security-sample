@@ -1,9 +1,9 @@
 package com.relive.mfa.configure;
 
-import com.relive.mfa.TotpAuthenticationFilter;
-import com.relive.mfa.authentication.TotpAuthenticationProvider;
+import com.relive.mfa.MfaAuthenticationFilter;
+import com.relive.mfa.authentication.MfaAuthenticationProvider;
 import com.relive.mfa.totp.DefaultTotpManager;
-import com.relive.mfa.totp.TotpManager;
+import com.relive.mfa.totp.MfaAuthenticationManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,31 +19,31 @@ import org.springframework.util.Assert;
  */
 public class MfaAuthenticationConfigurer extends AbstractHttpConfigurer<MfaAuthenticationConfigurer, HttpSecurity> {
 
-    private TotpManager totpManager;
+    private MfaAuthenticationManager mfaAuthenticationManager;
 
 
-    public MfaAuthenticationConfigurer totpManager(TotpManager totpManager) {
-        Assert.notNull(totpManager, "totpManager can not be null");
-        this.totpManager = totpManager;
+    public MfaAuthenticationConfigurer mfaAuthenticationManager(MfaAuthenticationManager mfaAuthenticationManager) {
+        Assert.notNull(mfaAuthenticationManager, "mfaAuthenticationManager can not be null");
+        this.mfaAuthenticationManager = mfaAuthenticationManager;
         return this;
     }
 
     @Override
     public void init(HttpSecurity http) throws Exception {
-        if (this.totpManager == null) {
-            this.totpManager = new DefaultTotpManager();
+        if (this.mfaAuthenticationManager == null) {
+            this.mfaAuthenticationManager = new DefaultTotpManager();
         }
         ApplicationContext applicationContext = http.getSharedObject(ApplicationContext.class);
         UserDetailsService userDetailsService = applicationContext.getBean(UserDetailsService.class);
-        http.authenticationProvider(this.postProcess(new TotpAuthenticationProvider(userDetailsService, totpManager)));
+        http.authenticationProvider(this.postProcess(new MfaAuthenticationProvider(userDetailsService, mfaAuthenticationManager)));
         super.init(http);
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-        TotpAuthenticationFilter totpAuthenticationFilter = new TotpAuthenticationFilter(authenticationManager, new AntPathRequestMatcher("/login", "POST"));
-        http.addFilterBefore(this.postProcess(totpAuthenticationFilter), UsernamePasswordAuthenticationFilter.class);
+        MfaAuthenticationFilter mfaAuthenticationFilter = new MfaAuthenticationFilter(authenticationManager, new AntPathRequestMatcher("/login", "POST"));
+        http.addFilterBefore(this.postProcess(mfaAuthenticationFilter), UsernamePasswordAuthenticationFilter.class);
         super.configure(http);
     }
 }

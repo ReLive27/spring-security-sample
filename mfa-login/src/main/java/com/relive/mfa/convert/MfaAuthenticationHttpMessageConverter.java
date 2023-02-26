@@ -1,6 +1,6 @@
 package com.relive.mfa.convert;
 
-import com.relive.mfa.handler.TotpMfaResponse;
+import com.relive.mfa.handler.MfaAuthenticationResponse;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpInputMessage;
@@ -22,32 +22,32 @@ import java.util.Map;
  * @author: ReLive
  * @date: 2023/1/13 19:39
  */
-public class TotpHttpMessageConverter extends AbstractHttpMessageConverter<TotpMfaResponse> {
+public class MfaAuthenticationHttpMessageConverter extends AbstractHttpMessageConverter<MfaAuthenticationResponse> {
     private static final ParameterizedTypeReference<Map<String, Object>> STRING_OBJECT_MAP = new ParameterizedTypeReference<Map<String, Object>>() {
     };
 
     private final GenericHttpMessageConverter<Object> jsonMessageConverter = new MappingJackson2HttpMessageConverter();
-    private Converter<TotpMfaResponse, Map<String, Object>> totpResponseConverter = new TotpResponseMapConverter();
+    private Converter<MfaAuthenticationResponse, Map<String, Object>> converter = new MfaAuthenticationResponseMapConverter();
 
 
     @Override
     protected boolean supports(Class<?> clazz) {
-        return TotpMfaResponse.class.isAssignableFrom(clazz);
+        return MfaAuthenticationResponse.class.isAssignableFrom(clazz);
     }
 
     @Override
-    protected TotpMfaResponse readInternal(Class<? extends TotpMfaResponse> clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
+    protected MfaAuthenticationResponse readInternal(Class<? extends MfaAuthenticationResponse> clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
         throw new HttpMessageNotReadableException(
-                "Result is empty when reading TotpMfaResponse", inputMessage);
+                "Result is empty when reading MfaAuthenticationResponse", inputMessage);
     }
 
     @Override
-    protected void writeInternal(TotpMfaResponse totpMfaResponse, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
+    protected void writeInternal(MfaAuthenticationResponse mfaAuthenticationResponse, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
         try {
-            Map<String, Object> totpMfaResponseParameters =
-                    this.totpResponseConverter.convert(totpMfaResponse);
+            Map<String, Object> mfaResponseParameters =
+                    this.converter.convert(mfaAuthenticationResponse);
             this.jsonMessageConverter.write(
-                    totpMfaResponseParameters,
+                    mfaResponseParameters,
                     STRING_OBJECT_MAP.getType(),
                     MediaType.APPLICATION_JSON,
                     outputMessage
@@ -58,10 +58,10 @@ public class TotpHttpMessageConverter extends AbstractHttpMessageConverter<TotpM
         }
     }
 
-    private static final class TotpResponseMapConverter implements Converter<TotpMfaResponse, Map<String, Object>> {
+    private static final class MfaAuthenticationResponseMapConverter implements Converter<MfaAuthenticationResponse, Map<String, Object>> {
 
         @Override
-        public Map<String, Object> convert(TotpMfaResponse source) {
+        public Map<String, Object> convert(MfaAuthenticationResponse source) {
             Map<String, Object> responseClaims = new LinkedHashMap<>();
             responseClaims.put("code", source.getResponseCode());
             responseClaims.put("message", source.getMessage());

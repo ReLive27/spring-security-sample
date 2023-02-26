@@ -1,10 +1,10 @@
 package com.relive.mfa;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.relive.mfa.authentication.TotpAuthenticationToken;
-import com.relive.mfa.context.TotpTokenContext;
-import com.relive.mfa.context.TotpTokenContextHolder;
-import com.relive.mfa.exception.TotpAuthenticationException;
+import com.relive.mfa.authentication.MfaAuthenticationToken;
+import com.relive.mfa.context.MfaAuthenticationTokenContextHolder;
+import com.relive.mfa.context.MfaTokenContext;
+import com.relive.mfa.exception.MfaAuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -29,7 +29,7 @@ import java.util.Map;
  * @author: ReLive
  * @date: 2023/1/7 22:50
  */
-public final class TotpAuthenticationFilter extends OncePerRequestFilter {
+public final class MfaAuthenticationFilter extends OncePerRequestFilter {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final AuthenticationManager authenticationManager;
     private final RequestMatcher requestMatcher;
@@ -38,13 +38,13 @@ public final class TotpAuthenticationFilter extends OncePerRequestFilter {
     private AuthenticationFailureHandler authenticationFailureHandler = this::onAuthenticationFailure;
 
 
-    public TotpAuthenticationFilter(AuthenticationManager authenticationManager,
-                                    RequestMatcher requestMatcher) {
+    public MfaAuthenticationFilter(AuthenticationManager authenticationManager,
+                                   RequestMatcher requestMatcher) {
         Assert.notNull(authenticationManager, "authenticationManager cannot be null");
         Assert.notNull(requestMatcher, "requestMatcher cannot be null");
         this.authenticationManager = authenticationManager;
         this.requestMatcher = requestMatcher;
-        this.authenticationConverter = new TotpAuthenticationConverter();
+        this.authenticationConverter = new MfaAuthenticationConverter();
     }
 
     @Override
@@ -66,7 +66,7 @@ public final class TotpAuthenticationFilter extends OncePerRequestFilter {
         } catch (AuthenticationException e) {
             this.authenticationFailureHandler.onAuthenticationFailure(request, response, e);
         } finally {
-            TotpTokenContextHolder.resetTotpTokenContext();
+            MfaAuthenticationTokenContextHolder.resetMfaTokenContext();
         }
     }
 
@@ -84,18 +84,18 @@ public final class TotpAuthenticationFilter extends OncePerRequestFilter {
 
     private void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                          Authentication authentication) {
-        TotpAuthenticationToken totpAuthenticationToken = (TotpAuthenticationToken) authentication;
-        TotpTokenContext context = new TotpTokenContext(totpAuthenticationToken.isMfa());
-        TotpTokenContextHolder.setTotpTokenContext(context);
+        MfaAuthenticationToken mfaAuthenticationToken = (MfaAuthenticationToken) authentication;
+        MfaTokenContext context = new MfaTokenContext(mfaAuthenticationToken.isMfa());
+        MfaAuthenticationTokenContextHolder.setMfaTokenContext(context);
     }
 
     private void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                          AuthenticationException exception) throws IOException {
         Map<String, Object> responseClaims = new HashMap<>();
         responseClaims.put("code", HttpStatus.BAD_REQUEST.value());
-        if (exception instanceof TotpAuthenticationException) {
-            TotpAuthenticationException totpAuthenticationException = (TotpAuthenticationException) exception;
-            responseClaims.put("message", totpAuthenticationException.getMessage());
+        if (exception instanceof MfaAuthenticationException) {
+            MfaAuthenticationException mfaAuthenticationException = (MfaAuthenticationException) exception;
+            responseClaims.put("message", mfaAuthenticationException.getMessage());
         } else {
             responseClaims.put("message", "invalid code");
         }

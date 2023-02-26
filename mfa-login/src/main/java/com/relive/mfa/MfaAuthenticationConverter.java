@@ -1,6 +1,6 @@
 package com.relive.mfa;
 
-import com.relive.mfa.authentication.TotpAuthenticationToken;
+import com.relive.mfa.authentication.MfaAuthenticationToken;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author: ReLive
  * @date: 2023/1/8 21:11
  */
-public class TotpAuthenticationConverter implements AuthenticationConverter {
-    public static final String SPRING_SECURITY_MFA_TOTP_KEY = "code";
+public class MfaAuthenticationConverter implements AuthenticationConverter {
+    public static final String SPRING_SECURITY_MFA_PARAM_NAME = "code";
     private RequestMatcher requestMatcher = createLoginRequestMatcher();
 
 
@@ -45,7 +45,7 @@ public class TotpAuthenticationConverter implements AuthenticationConverter {
             if (authentication != null) {
                 authentication.setAuthenticated(true);
             }
-            return new TotpAuthenticationToken(username, secret);
+            return new MfaAuthenticationToken(username, secret);
         }
 
         return null;
@@ -53,7 +53,7 @@ public class TotpAuthenticationConverter implements AuthenticationConverter {
 
     @Nullable
     protected String obtainSecret(HttpServletRequest request) {
-        return request.getParameter(SPRING_SECURITY_MFA_TOTP_KEY);
+        return request.getParameter(SPRING_SECURITY_MFA_PARAM_NAME);
     }
 
     private static RequestMatcher createLoginRequestMatcher() {

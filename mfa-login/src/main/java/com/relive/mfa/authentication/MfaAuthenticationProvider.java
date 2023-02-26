@@ -1,7 +1,7 @@
 package com.relive.mfa.authentication;
 
-import com.relive.mfa.exception.TotpAuthenticationException;
-import com.relive.mfa.totp.TotpManager;
+import com.relive.mfa.exception.MfaAuthenticationException;
+import com.relive.mfa.totp.MfaAuthenticationManager;
 import com.relive.mfa.userdetails.MfaUserDetails;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -15,25 +15,25 @@ import org.springframework.util.Assert;
  * @author: ReLive
  * @date: 2023/1/7 22:52
  */
-public class TotpAuthenticationProvider implements AuthenticationProvider {
-    private final TotpManager totpManager;
+public class MfaAuthenticationProvider implements AuthenticationProvider {
+    private final MfaAuthenticationManager mfaAuthenticationManager;
     private final UserDetailsService userDetailsService;
 
 
-    public TotpAuthenticationProvider(UserDetailsService userDetailsService,
-                                      TotpManager totpManager) {
+    public MfaAuthenticationProvider(UserDetailsService userDetailsService,
+                                     MfaAuthenticationManager mfaAuthenticationManager) {
         Assert.notNull(userDetailsService, "userDetailsService cannot be null");
-        Assert.notNull(totpManager, "totpManager cannot be null");
+        Assert.notNull(mfaAuthenticationManager, "mfaAuthenticationManager cannot be null");
         this.userDetailsService = userDetailsService;
-        this.totpManager = totpManager;
+        this.mfaAuthenticationManager = mfaAuthenticationManager;
     }
 
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        TotpAuthenticationToken totpAuthenticationToken = (TotpAuthenticationToken) authentication;
+        MfaAuthenticationToken mfaAuthenticationToken = (MfaAuthenticationToken) authentication;
 
-        String username = totpAuthenticationToken.getPrincipal().toString();
+        String username = mfaAuthenticationToken.getPrincipal().toString();
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
         if (userDetails == null) {
             throw new InternalAuthenticationServiceException("UserDetailsService returned null, which is an interface contract violation");
@@ -42,21 +42,21 @@ public class TotpAuthenticationProvider implements AuthenticationProvider {
         if (userDetails instanceof MfaUserDetails) {
             MfaUserDetails mfaUserDetails = (MfaUserDetails) userDetails;
             if (mfaUserDetails.isEnableMfa()) {
-                if (!this.totpManager.validCode(mfaUserDetails.getSecret(),
-                        totpAuthenticationToken.getCredentials())) {
+                if (!this.mfaAuthenticationManager.validCode(mfaUserDetails.getSecret(),
+                        mfaAuthenticationToken.getCredentials())) {
 
-                    throw new TotpAuthenticationException("Code verification failed", null);
+                    throw new MfaAuthenticationException("Code verification failed", null);
                 }
             }
 
-            return new TotpAuthenticationToken(username, totpAuthenticationToken.getCredentials(), true);
+            return new MfaAuthenticationToken(username, mfaAuthenticationToken.getCredentials(), true);
 
         }
-        throw new TotpAuthenticationException("MfaUserDetails must be an instance of UserDetails", null);
+        throw new MfaAuthenticationException("MfaUserDetails must be an instance of UserDetails", null);
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return TotpAuthenticationToken.class.isAssignableFrom(authentication);
+        return MfaAuthenticationToken.class.isAssignableFrom(authentication);
     }
 }
