@@ -23,7 +23,7 @@ public class MfaUserDetails implements UserDetails, CredentialsContainer {
     private final boolean accountNonLocked;
     private final boolean credentialsNonExpired;
     private final boolean enabled;
-    private boolean enableMfa;
+    private final boolean enableMfa;
     private String secret;
 
     public MfaUserDetails(String username, String password, boolean enableMfa, String secret, Collection<? extends GrantedAuthority> authorities) {
