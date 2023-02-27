@@ -13,7 +13,7 @@
 
 ## 相关文章:
 
-- [（待更新）Spring Security 多因素认证（MFA）]()
+- [Spring Security 多因素认证（MFA）](https://relive27.github.io/blog/spring-security-mfa)
 - [（待更新）使用Spring Security 防止暴力验证尝试]()
 - [（待更新）Spring Security LDAP身份验证]()
 - [（待更新）Spring Security 记住我]()

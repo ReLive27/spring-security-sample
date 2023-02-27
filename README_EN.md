@@ -14,7 +14,7 @@ modules here cover many aspects of Spring Security.
 
 ## Relevant Articles:
 
-- [（pending upgrade）Spring Security Multi-Factor Authentication (MFA)]()
+- [Spring Security Multi-Factor Authentication (MFA)](https://relive27.github.io/blog/spring-security-mfa)
 - [（pending upgrade）Prevent brute force authentication attempts with Spring Security]()
 - [（pending upgrade）Spring Security LDAP Authentication]()
 - [（pending upgrade）Spring Security Remember me]()
