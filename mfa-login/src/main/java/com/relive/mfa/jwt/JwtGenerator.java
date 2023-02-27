@@ -35,8 +35,6 @@ public final class JwtGenerator implements TokenGenerator<Jwt> {
         JwsHeader headers = headersBuilder.build();
         JwtClaimsSet claims = claimsBuilder.build();
 
-        Jwt jwt = this.jwtEncoder.encode(JwtEncoderParameters.from(headers, claims));
-
-        return jwt;
+        return this.jwtEncoder.encode(JwtEncoderParameters.from(headers, claims));
     }
 }

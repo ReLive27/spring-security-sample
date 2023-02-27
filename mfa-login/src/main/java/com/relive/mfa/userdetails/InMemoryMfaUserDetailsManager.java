@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @Slf4j
 public class InMemoryMfaUserDetailsManager implements UserDetailsManager, UserDetailsPasswordService {
-    private final Map<String, UserDetails> users = new HashMap();
+    private final Map<String, UserDetails> users = new HashMap<>();
     private AuthenticationManager authenticationManager;
 
 
