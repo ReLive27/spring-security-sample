@@ -1,7 +1,7 @@
 package com.relive.mfa.context;
 
 /**
- * {@link MfaTokenContext} 的持有者使用 {@code ThreadLocal} 将其与当前线程相关联
+ * A holder of the {@link MfaTokenContext} that associates it with the current thread using a {@code ThreadLocal}.
  *
  * @author: ReLive
  * @date: 2023/1/7 23:20
@@ -13,7 +13,7 @@ public class MfaAuthenticationTokenContextHolder {
     }
 
     /**
-     * 返回当前线程绑定的 {@link MfaTokenContext}
+     * Returns the {@link MfaTokenContext} bound to the current thread.
      *
      * @return
      */
@@ -22,7 +22,7 @@ public class MfaAuthenticationTokenContextHolder {
     }
 
     /**
-     * 将给定的 {@link MfaTokenContext} 绑定到当前线程
+     * Bind the given {@link MfaTokenContext} to the current thread.
      *
      * @param tokenContext
      */
@@ -35,7 +35,7 @@ public class MfaAuthenticationTokenContextHolder {
     }
 
     /**
-     * 重置绑定到当前线程的 {@link MfaTokenContext}
+     * Reset the {@link MfaTokenContext} bound to the current thread.
      */
     public static void resetMfaTokenContext() {
         holder.remove();
