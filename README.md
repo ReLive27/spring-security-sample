@@ -1,4 +1,4 @@
-# <font size="6p">spring-security-sample</font> <font size="5p">  | [English Documentation](README_EN.md)</font>
+# <font size="6p">spring-security-sample</font>
 
 <p align="left">
 	<a href="https://github.com/ReLive27/spring-security-sample/stargazers"><img src="https://img.shields.io/github/stars/ReLive27/spring-security-sample?style=flat-square&logo=GitHub"></a>
@@ -8,64 +8,66 @@
 	<a href="https://github.com/ReLive27/spring-security-sample/blob/master/LICENSE"><img src="https://img.shields.io/github/license/ReLive27/spring-security-sample.svg?style=flat-square"></a>
 </p>
 
-这个项目是一个 [Spring Security](https://spring.io/projects/spring-security) 示例教程的集合。Spring Security
-是一个提供身份验证、授权和针对常见攻击的保护的框架。这里的模块涵盖了 Spring Security 的许多方面。
+This project is a collection of [Spring Security](https://spring.io/projects/spring-security) tutorials by example.
+Spring Security is a framework that provides authentication, authorization, and protection against common attacks. The
+modules here cover many aspects of Spring Security.
 
-## 相关文章:
+## Relevant Articles:
 
-- [Spring Security 多因素认证（MFA）](https://relive27.github.io/blog/spring-security-mfa)
-- [（待更新）使用Spring Security 防止暴力验证尝试]()
-- [（待更新）Spring Security LDAP身份验证]()
-- [（待更新）Spring Security 记住我]()
-- [（待更新）Spring Security 持久化记住我]()
-- [（待更新）Spring Security 限制同一账号单个用户登录]()
-- [（待更新）Spring Security X.509认证]()
-- [（待更新）Spring Security 身份验证事件]()
-- [（待更新）Spring Security ACL访问控制]()
-- [（待更新）Spring Security 使用FilterSecurityInterceptor实现动态授权]()
-- [（待更新）Spring Security 使用AuthorizationFilter实现动态授权]()
-- [（待更新）Spring Security 基于TireTree实现Restful API动态授权]()
-- [（待更新）Spring Security 授权事件]()
-- [（待更新）Spring Security 的CSRF保护]()
-- [（待更新）使用 Spring Security 实现异地通知进行身份认证]()
-- [（待更新）Spring Security CAS单点登录]()
-- [（待更新）Spring Security SAML和数据库身份验证]()
-- [（待更新）Spring Security 使用 OPA 做出 API 授权决策]()
-- [（待更新）使用 Spring Security 和 Keycloak 保护应用程序]()
+- [Spring Security Multi-Factor Authentication (MFA)](https://relive27.github.io/blog/spring-security-mfa)
+- [（pending upgrade）Prevent brute force authentication attempts with Spring Security]()
+- [（pending upgrade）Spring Security LDAP Authentication]()
+- [（pending upgrade）Spring Security Remember me]()
+- [（pending upgrade）Spring Security persistence remember me]()
+- [（pending upgrade）Spring Security restricts single user login of the same account]()
+- [（pending upgrade）Spring Security X.509 authentication]()
+- [（pending upgrade）Spring Security Authentication Events]()
+- [（pending upgrade）Spring Security ACL access control]()
+- [（pending upgrade）Spring Security uses FilterSecurityInterceptor to implement dynamic authorization]()
+- [（pending upgrade）Spring Security uses AuthorizationFilter to implement dynamic authorization]()
+- [（pending upgrade）Spring Security implements dynamic authorization of Restful API based on TireTree]()
+- [（pending upgrade）Spring Security Authorization Events]()
+- [（pending upgrade）Spring Security CSRF Protection]()
+- [（pending upgrade）Using Spring Security to implement remote notification for authentication]()
+- [（pending upgrade）Spring Security CAS single sign-on]()
+- [（pending upgrade）Spring Security SAML and database authentication]()
+- [（pending upgrade）Spring Security uses OPA to make API authorization decisions]()
+- [（pending upgrade）Securing applications with Spring Security and Keycloak]()
 
-## 版本
+## Version
 
-| Spring Boot 版本  | Spring Cloud 版本  |  Spring Security 版本   |
-| ---------------- | ----------------- | -------------           |
-| 2.7.6          | 2021.0.5          |  5.7.5                    |
+| Spring Boot   | Spring Cloud   |  Spring Security   |
+| ---------------- | ----------------- | ------    |
+| 2.7.6           | 2021.0.5          |  5.7.5  |
 
-## 构建项目
+## Building from Source
 
-spring-security-sample 使用基于 [Maven](https://maven.apache.org/) 的构建系统。
+spring-security-sample uses a [Maven](https://maven.apache.org/) based build system.
 
-### 先决条件
+### Prerequisites
 
-[Git](https://help.github.com/set-up-git-redirect) 和 [JDK8](https://www.oracle.com/technetwork/java/javase/downloads)
-构建.
+[Git](https://help.github.com/set-up-git-redirect) and
+the [JDK8 build](https://www.oracle.com/technetwork/java/javase/downloads).
 
-确保您的JAVA_HOME环境变量指向jdk1.8.0从 JDK 下载中提取的文件夹。
+Be sure that your `JAVA_HOME` environment variable points to the `jdk1.8.0` folder extracted from the JDK download.
 
-### 检查来源
+### Check out sources
 
 ```
 git clone git@github.com:ReLive27/spring-security-sample.git
 ```
 
-### 构建并安装项目：
+### Build and Install the Project:
 
 ```
 ./mvn clean install
 ```
 
-## 贡献
+## Contributing
 
-非常欢迎[提出请求](https://help.github.com/articles/creating-a-pull-request) 。
+[Pull requests](https://help.github.com/articles/creating-a-pull-request) are welcome.
 
-## 许可
+## License
 
-spring-security-sample 是在 [Apache 2.0 许可](https://www.apache.org/licenses/LICENSE-2.0.html) 下发布的开源软件 。
+spring-security-sample is Open Source software released under the
+[Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0.html).
