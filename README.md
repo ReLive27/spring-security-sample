@@ -15,26 +15,24 @@ modules here cover many aspects of Spring Security.
 ## Relevant Articles:
 
 - [Spring Security Multi-Factor Authentication (MFA)](https://relive27.github.io/blog/spring-security-mfa)
-- [（pending upgrade）Prevent brute force authentication attempts with Spring Security]()
-- [（pending upgrade）Spring Security LDAP Authentication]()
-- [（pending upgrade）Spring Security Remember me]()
-- [（pending upgrade）Spring Security persistence remember me]()
-- [（pending upgrade）Spring Security restricts single user login of the same account]()
-- [（pending upgrade）Spring Security X.509 authentication]()
-- [（pending upgrade）Spring Security Authentication Events]()
-- [（pending upgrade）Spring Security ACL access control]()
-- [（pending upgrade）Spring Security uses FilterSecurityInterceptor to implement dynamic authorization]()
-- [（pending upgrade）Spring Security uses AuthorizationFilter to implement dynamic authorization]()
-- [（pending upgrade）Spring Security implements dynamic authorization of Restful API based on TireTree]()
-- [（pending upgrade）Spring Security Authorization Events]()
-- [（pending upgrade）Spring Security CSRF Protection]()
-- [（pending upgrade）Using Spring Security to implement remote notification for authentication]()
-- [（pending upgrade）Spring Security CAS single sign-on]()
-- [（pending upgrade）Spring Security SAML and database authentication]()
-- [（pending upgrade）Spring Security uses OPA to make API authorization decisions]()
-- [（pending upgrade）Securing applications with Spring Security and Keycloak]()
+- [(stay tuned)Prevent Brute Force Authentication Attempts with Spring Security]()
+- [(stay tuned)Spring Security LDAP Authentication]()
+- [(stay tuned)Spring Security Persistence Remember-me]()
+- [(stay tuned)Spring Security X.509 Authentication]()
+- [(stay tuned)Spring Security CAS Single Sign-on]()
+- [(stay tuned)Spring Security SAML and Database Authentication]()
+- [(stay tuned)Spring Security Restricts Single User Login of the Same Account]()
+- [(stay tuned)Spring Security Graphic Captcha Login]()
+- [(stay tuned)Using Spring Security to implement Remote Notification for Authentication]()
+- [(stay tuned)Spring Security ACL Access Control]()
+- [(stay tuned)Spring Security uses FilterSecurityInterceptor to implement Dynamic Authorization]()
+- [(stay tuned)Spring Security uses AuthorizationFilter to implement Dynamic Authorization]()
+- [(stay tuned)Spring Security implements Dynamic Authorization of Restful API based on TireTree]()
+- [(stay tuned)Spring Security CSRF Protection]()
+- [(stay tuned)Spring Security uses OPA to make API Authorization Decisions]()
+- [(stay tuned)Securing Applications with Spring Security and Keycloak]()
 
-## Version
+## Spring Version
 
 | Spring Boot   | Spring Cloud   |  Spring Security   |
 | ---------------- | ----------------- | ------    |
