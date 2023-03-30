@@ -23,14 +23,15 @@ modules here cover many aspects of Spring Security.
 - [(stay tuned)Spring Security SAML and Database Authentication]()
 - [(stay tuned)Spring Security Restricts Single User Login of the Same Account]()
 - [(stay tuned)Spring Security Graphic Captcha Login]()
-- [(stay tuned)Using Spring Security to implement Remote Notification for Authentication]()
+- [(stay tuned)Spring Security One-time Token Verification]()
+- [(stay tuned)Using Spring Security to Implement Remote Notification for Authentication]()
 - [(stay tuned)Spring Security ACL Access Control]()
-- [(stay tuned)Spring Security uses FilterSecurityInterceptor to implement Dynamic Authorization]()
-- [(stay tuned)Spring Security uses AuthorizationFilter to implement Dynamic Authorization]()
-- [(stay tuned)Spring Security implements Dynamic Authorization of Restful API based on TireTree]()
+- [(stay tuned)Spring Security Uses FilterSecurityInterceptor to Implement Dynamic Authorization]()
+- [(stay tuned)Spring Security Uses AuthorizationFilter to Implement Dynamic Authorization]()
+- [(stay tuned)Spring Security Optimized Authorization Rules with TrieTree]()
 - [(stay tuned)Spring Security CSRF Protection]()
-- [(stay tuned)Spring Security uses OPA to make API Authorization Decisions]()
-- [(stay tuned)Securing Applications with Spring Security and Keycloak]()
+- [(stay tuned)Spring Security Uses OPA to Make API Authorization Decisions]()
+- [(stay tuned)Securing Applications With Spring Security and Keycloak]()
 
 ## Spring Version
 
