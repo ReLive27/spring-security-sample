@@ -11,6 +11,7 @@
         <module>remember-me</module>
         <module>saml2-login</module>
         <module>trietree-authorization</module>
+        <module>graphic-captcha-login</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
