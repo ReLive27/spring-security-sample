@@ -17,7 +17,7 @@ modules here cover many aspects of Spring Security.
 - [Spring Security Multi-Factor Authentication (MFA)](https://relive27.github.io/blog/spring-security-mfa)
 - [(stay tuned)Prevent Brute Force Authentication Attempts with Spring Security]()
 - [(stay tuned)Spring Security LDAP Authentication]()
-- [(stay tuned)Spring Security Persistence Remember-me]()
+- [Spring Security Persistence Remember-me](https://github.com/ReLive27/spring-security-sample/tree/master/remember-me)
 - [(stay tuned)Spring Security X.509 Authentication]()
 - [(stay tuned)Spring Security CAS Single Sign-on]()
 - [(stay tuned)Spring Security SAML and Database Authentication]()
