@@ -1,0 +1,29 @@
+server:
+  port: 8085
+
+spring:
+  config:
+    import: optional:consul:127.0.0.1:8500
+  application:
+    name: relive-app
+  cloud:
+    consul:
+      scheme: http
+      host: ${CONSUL_SERVER_HOST:127.0.0.1}
+      port: ${CONSUL_SERVER_PORT:8500}
+      config:
+        enabled: true
+        format: YAML
+        name: app
+        data-key: data
+        profileSeparator: "::"
+        prefixes: config
+        watch:
+          enabled: true
+
+logging:
+  level:
+    com.dbappsecurity.iot.iam: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
