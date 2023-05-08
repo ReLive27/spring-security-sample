@@ -21,13 +21,13 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    SecurityFilterChain resourceServerSecurityFilterChain(HttpSecurity http, TireTreeRequestMatcher matcher) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http, TireTreeRequestMatcher matcher) throws Exception {
         http.authorizeHttpRequests(authorizeHttpRequest -> {
             authorizeHttpRequest.regexMatchers("/actuator/health").permitAll()
                     .requestMatchers(matcher).access(new TireTreeAuthorizationManager())
                     .anyRequest().authenticated();
         })
-                .formLogin(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults())
                 .csrf().disable();
 
         return http.build();

@@ -25,6 +25,7 @@ public class StartEvent implements ApplicationListener<ApplicationReadyEvent> {
     @SneakyThrows
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
+        //Mock data for testing
         List<String> api = new ArrayList<>();
         api.add("/testA==GET==ROLE_ADMIN");
         api.add("/testB==POST==ROLE_USER");
