@@ -12,6 +12,7 @@
         <module>saml2-login</module>
         <module>trietree-authorization</module>
         <module>graphic-captcha-login</module>
+        <module>x509</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
