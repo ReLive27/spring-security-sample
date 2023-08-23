@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationEntryPointFailureHandler;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -41,8 +42,10 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
-                .formLogin().successHandler(MfaConfigurerUtils.getAuthenticationSuccessHandler(http))
-                .and()
+                .formLogin(form ->
+                        form.successHandler(MfaConfigurerUtils.getAuthenticationSuccessHandler(http))
+                                .failureHandler(new AuthenticationEntryPointFailureHandler(new Http401UnauthorizedEntryPoint()))
+                )
                 .logout().logoutSuccessHandler(new SimpleLogoutSuccessHandler())
                 .and()
                 .csrf().disable()
