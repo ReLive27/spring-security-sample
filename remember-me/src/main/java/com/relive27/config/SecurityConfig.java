@@ -1,4 +1,4 @@
-package com.relive.config;
+package com.relive27.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import javax.sql.DataSource;
 
 /**
- * @author: ReLive
+ * @author: ReLive27
  * @date: 2023/3/29 20:20
  */
 @Configuration(proxyBeanMethods = false)

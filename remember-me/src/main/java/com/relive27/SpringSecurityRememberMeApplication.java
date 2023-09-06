@@ -1,10 +1,10 @@
-package com.relive;
+package com.relive27;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @author: ReLive
+ * @author: ReLive27
  * @date: 2023/2/21 19:51
  */
 @SpringBootApplication
