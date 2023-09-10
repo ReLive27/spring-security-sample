@@ -41,10 +41,9 @@ public final class HttpSessionCaptchaAuthorizationRequestRepository implements C
         Assert.notNull(request, "request cannot be null");
 
         CaptchaAuthorizationRequest authorizationRequest = this.getAuthorizationRequests(request);
-        if (authorizationRequest == null) {
-            return null;
+        if (authorizationRequest != null) {
+            request.getSession().removeAttribute(this.sessionAttributeName);
         }
-        request.getSession().removeAttribute(this.sessionAttributeName);
         return authorizationRequest;
     }
 
