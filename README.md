@@ -32,6 +32,7 @@ modules here cover many aspects of Spring Security.
 - [(stay tuned)Spring Security CSRF Protection]()
 - [(stay tuned)Spring Security Uses OPA to Make API Authorization Decisions]()
 - [(stay tuned)Securing Applications With Spring Security and Keycloak]()
+- [(stay tuned)WebAuthn With Spring Security]()
 
 ## Spring Version
 
