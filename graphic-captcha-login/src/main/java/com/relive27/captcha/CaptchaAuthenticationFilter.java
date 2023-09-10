@@ -2,7 +2,9 @@ package com.relive27.captcha;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -14,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
 /**
  * @author: ReLive27
@@ -21,6 +24,7 @@ import java.io.IOException;
  */
 public class CaptchaAuthenticationFilter extends OncePerRequestFilter implements ApplicationEventPublisherAware {
     public static final String DEFAULT_LOGIN_REQUEST_BASE_URI = "/login";
+    private final HttpMessageConverter<Object> errorHttpMessageConverter = new MappingJackson2HttpMessageConverter();
 
     private RequestMatcher requestMatcher;
 
@@ -49,23 +53,25 @@ public class CaptchaAuthenticationFilter extends OncePerRequestFilter implements
             filterChain.doFilter(request, response);
             return;
         }
-
         try {
             CaptchaAuthorizationRequest authorizationRequest = this.authorizationRequestResolver.resolve(request);
-            if (authorizationRequest != null) {
-                CaptchaAuthorizationRequest expectedAuthorizationRequest = this.authorizationRequestRepository.removeAuthorizationRequest(request, response);
-                if (expectedAuthorizationRequest != null &&
-                        authorizationRequest.getCaptcha().equalsIgnoreCase(expectedAuthorizationRequest.getCaptcha())) {
-                    filterChain.doFilter(request, response);
-                    return;
-                }
+            if (authorizationRequest == null) {
+                this.unsuccessfulAuthorization(request, response, new BadCaptchaException(null, (String) null));
+                return;
+            }
+            CaptchaAuthorizationRequest expectedAuthorizationRequest = this.authorizationRequestRepository.removeAuthorizationRequest(request, response);
+            if (expectedAuthorizationRequest == null ||
+                    !authorizationRequest.getCaptcha().equalsIgnoreCase(expectedAuthorizationRequest.getCaptcha())) {
+                this.unsuccessfulAuthorization(request, response, new BadCaptchaException(authorizationRequest.getCaptcha(), expectedAuthorizationRequest == null ?
+                        null : expectedAuthorizationRequest.getCaptcha()));
+                return;
             }
         } catch (Exception e) {
             this.unsuccessfulAuthorization(request, response, new BadCaptchaException(null, (String) null));
+            return;
         }
-        //TODO
-        this.unsuccessfulAuthorization(request, response, new BadCaptchaException(null, (String) null));
 
+        filterChain.doFilter(request, response);
     }
 
     private void unsuccessfulAuthorization(HttpServletRequest request, HttpServletResponse response,
@@ -73,9 +79,8 @@ public class CaptchaAuthenticationFilter extends OncePerRequestFilter implements
         if (this.eventPublisher != null) {
             this.eventPublisher.publishEvent(new AuthenticationFailureBadCaptchaEvent(null, ex));
         }
-        //TODO 日志
-        response.sendError(HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage());
+        ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
+        this.errorHttpMessageConverter.write(Collections.singletonMap("message", ex.getMessage()), null, httpResponse);
     }
 
     @Override
