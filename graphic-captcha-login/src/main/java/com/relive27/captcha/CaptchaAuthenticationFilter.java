@@ -95,4 +95,8 @@ public class CaptchaAuthenticationFilter extends OncePerRequestFilter implements
     public void setAuthorizationRequestRepository(CaptchaAuthorizationRequestRepository<CaptchaAuthorizationRequest> authorizationRequestRepository) {
         this.authorizationRequestRepository = authorizationRequestRepository;
     }
+
+    public void setRequestMatcher(RequestMatcher requestMatcher) {
+        this.requestMatcher = requestMatcher;
+    }
 }
