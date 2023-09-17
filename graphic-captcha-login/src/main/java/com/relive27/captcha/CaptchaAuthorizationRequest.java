@@ -2,7 +2,6 @@ package com.relive27.captcha;
 
 import lombok.Data;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 /**
  * @author: ReLive27
