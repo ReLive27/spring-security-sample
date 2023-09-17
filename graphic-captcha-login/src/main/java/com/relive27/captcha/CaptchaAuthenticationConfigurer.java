@@ -33,9 +33,9 @@ public class CaptchaAuthenticationConfigurer extends AbstractHttpConfigurer<Capt
         return this;
     }
 
-    public CaptchaAuthenticationConfigurer captchaAuthorizationRequestRepository(CaptchaAuthorizationRequestRepository<CaptchaAuthorizationRequest> authorizationRequestRepository) {
-        Assert.notNull(authorizationRequestRepository, "authorizationRequestRepository cannot be null");
-        this.filter.setAuthorizationRequestRepository(authorizationRequestRepository);
+    public CaptchaAuthenticationConfigurer captchaAuthorizationRequestRepository(CaptchaAuthorizationResponseRepository<CaptchaAuthorizationResponse> authorizationResponseRepository) {
+        Assert.notNull(authorizationResponseRepository, "authorizationResponseRepository cannot be null");
+        this.filter.setAuthorizationResponseRepository(authorizationResponseRepository);
         return this;
     }
 
