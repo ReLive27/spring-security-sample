@@ -1,7 +1,6 @@
 package com.relive27.captcha;
 
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.util.StringUtils;
 
 /**
  * @author: ReLive27
@@ -9,10 +8,13 @@ import org.springframework.util.StringUtils;
  */
 public class BadCaptchaException extends AuthenticationException {
 
-    public BadCaptchaException(String inputCaptcha, String expectedCaptcha) {
-        this(!StringUtils.hasText(inputCaptcha) ? "验证码不能为空" :
-                !StringUtils.hasText(expectedCaptcha) ? "验证码已过期" :
+    private CaptchaAuthenticationExchange authenticationExchange;
+
+    public BadCaptchaException(CaptchaAuthenticationExchange authenticationExchange) {
+        this(authenticationExchange.getAuthorizationRequest() == null ? "验证码不能为空" :
+                authenticationExchange.getAuthorizationResponse() == null ? "验证码已过期" :
                         "验证码错误");
+        this.authenticationExchange = authenticationExchange;
     }
 
     public BadCaptchaException(String msg) {
@@ -21,5 +23,9 @@ public class BadCaptchaException extends AuthenticationException {
 
     public BadCaptchaException(String msg, Throwable cause) {
         super(msg, cause);
+    }
+
+    public CaptchaAuthenticationExchange getAuthenticationExchange() {
+        return authenticationExchange;
     }
 }
