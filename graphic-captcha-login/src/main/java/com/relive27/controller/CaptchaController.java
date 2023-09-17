@@ -2,9 +2,9 @@ package com.relive27.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
-import com.relive27.captcha.CaptchaAuthorizationRequest;
-import com.relive27.captcha.CaptchaAuthorizationRequestRepository;
-import com.relive27.captcha.HttpSessionCaptchaAuthorizationRequestRepository;
+import com.relive27.captcha.CaptchaAuthorizationResponse;
+import com.relive27.captcha.CaptchaAuthorizationResponseRepository;
+import com.relive27.captcha.HttpSessionCaptchaAuthorizationResponseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +25,7 @@ import static com.relive27.captcha.DefaultCaptchaAuthorizationRequestResolver.ge
 @RequiredArgsConstructor
 public class CaptchaController {
 
-    private final CaptchaAuthorizationRequestRepository<CaptchaAuthorizationRequest> authorizationRequestRepository = new HttpSessionCaptchaAuthorizationRequestRepository();
+    private final CaptchaAuthorizationResponseRepository<CaptchaAuthorizationResponse> authorizationResponseRepository = new HttpSessionCaptchaAuthorizationResponseRepository();
 
     private static final DefaultKaptcha captchaProducer;
 
@@ -46,7 +46,7 @@ public class CaptchaController {
         response.setContentType("image/jpeg");
 
         String captchaText = captchaProducer.createText();
-        this.authorizationRequestRepository.saveAuthorizationRequest(CaptchaAuthorizationRequest.captcha(captchaText)
+        this.authorizationResponseRepository.saveAuthorizationResponse(CaptchaAuthorizationResponse.captcha(captchaText)
                 .host(getIpAddr(request))
                 .build(), request, response);
 
