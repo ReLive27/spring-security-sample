@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -32,7 +33,7 @@ public class CaptchaAuthenticationFilter extends OncePerRequestFilter implements
 
     private CaptchaAuthorizationRequestResolver authorizationRequestResolver = new DefaultCaptchaAuthorizationRequestResolver();
 
-    private CaptchaAuthorizationRequestRepository<CaptchaAuthorizationRequest> authorizationRequestRepository = new HttpSessionCaptchaAuthorizationRequestRepository();
+    private CaptchaAuthorizationResponseRepository<CaptchaAuthorizationResponse> authorizationResponseRepository = new HttpSessionCaptchaAuthorizationResponseRepository();
 
     public CaptchaAuthenticationFilter() {
         this(DEFAULT_LOGIN_REQUEST_BASE_URI);
@@ -53,31 +54,30 @@ public class CaptchaAuthenticationFilter extends OncePerRequestFilter implements
             filterChain.doFilter(request, response);
             return;
         }
+        CaptchaAuthorizationRequest authorizationRequest;
         try {
-            CaptchaAuthorizationRequest authorizationRequest = this.authorizationRequestResolver.resolve(request);
-            if (authorizationRequest == null) {
-                this.unsuccessfulAuthorization(request, response, new BadCaptchaException(null, (String) null));
-                return;
-            }
-            CaptchaAuthorizationRequest expectedAuthorizationRequest = this.authorizationRequestRepository.removeAuthorizationRequest(request, response);
-            if (expectedAuthorizationRequest == null ||
-                    !authorizationRequest.getCaptcha().equalsIgnoreCase(expectedAuthorizationRequest.getCaptcha())) {
-                this.unsuccessfulAuthorization(request, response, new BadCaptchaException(authorizationRequest.getCaptcha(), expectedAuthorizationRequest == null ?
-                        null : expectedAuthorizationRequest.getCaptcha()));
-                return;
-            }
+            authorizationRequest = this.authorizationRequestResolver.resolve(request);
         } catch (Exception e) {
-            this.unsuccessfulAuthorization(request, response, new BadCaptchaException(null, (String) null));
+            this.unsuccessfulAuthorization(request, response, new BadCaptchaException(new CaptchaAuthenticationExchange(null, null)));
             return;
         }
-
-        filterChain.doFilter(request, response);
+        CaptchaAuthorizationResponse authorizationResponse = this.authorizationResponseRepository.removeAuthorizationResponse(request, response);
+        if (authorizationResponse == null ||
+                !authorizationRequest.getCaptcha().equalsIgnoreCase(authorizationResponse.getCaptcha())) {
+            this.unsuccessfulAuthorization(request, response, new BadCaptchaException(new CaptchaAuthenticationExchange(authorizationRequest, authorizationResponse)));
+        } else {
+            filterChain.doFilter(request, response);
+        }
     }
 
     private void unsuccessfulAuthorization(HttpServletRequest request, HttpServletResponse response,
                                            AuthenticationException ex) throws IOException {
         if (this.eventPublisher != null) {
-            this.eventPublisher.publishEvent(new AuthenticationFailureBadCaptchaEvent(null, ex));
+            BadCaptchaException e = (BadCaptchaException) ex;
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(e.getAuthenticationExchange().getAuthorizationRequest() == null ?
+                    "anonymousUser" : e.getAuthenticationExchange().getAuthorizationRequest().getUsername(), "");
+            this.eventPublisher.publishEvent(new AuthenticationFailureBadCaptchaEvent(authenticationToken, ex));
+
         }
         ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
         this.errorHttpMessageConverter.write(Collections.singletonMap("message", ex.getMessage()), null, httpResponse);
@@ -92,8 +92,8 @@ public class CaptchaAuthenticationFilter extends OncePerRequestFilter implements
         this.authorizationRequestResolver = authorizationRequestResolver;
     }
 
-    public void setAuthorizationRequestRepository(CaptchaAuthorizationRequestRepository<CaptchaAuthorizationRequest> authorizationRequestRepository) {
-        this.authorizationRequestRepository = authorizationRequestRepository;
+    public void setAuthorizationResponseRepository(CaptchaAuthorizationResponseRepository<CaptchaAuthorizationResponse> authorizationResponseRepository) {
+        this.authorizationResponseRepository = authorizationResponseRepository;
     }
 
     public void setRequestMatcher(RequestMatcher requestMatcher) {
