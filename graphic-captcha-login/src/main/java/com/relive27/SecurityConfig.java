@@ -1,7 +1,10 @@
 package com.relive27;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.relive27.cachedrequest.ContentCachingConfigurer;
 import com.relive27.captcha.CaptchaAuthenticationConfigurer;
+import com.relive27.web.FormJsonLoginConfigurer;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -31,16 +34,19 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorizeRequest ->
                 authorizeRequest.antMatchers("/captcha.jpg").permitAll()
                         .anyRequest().authenticated())
-                .formLogin(from ->
-                        from.failureHandler(new AuthenticationEntryPointFailureHandler(
-                                new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)
-                        ))
-                                .successHandler((request, response, authentication) -> {
-                                    try (Writer writer = response.getWriter()) {
-                                        writer.write(new ObjectMapper().writeValueAsString(Collections.singletonMap("token", UUID.randomUUID().toString())));
-                                    }
-                                }))
+                .apply(new FormJsonLoginConfigurer<>())
+                .successHandler((request, response, authentication) -> {
+                    try (Writer writer = response.getWriter()) {
+                        //This is just a simple simulation token response, please do not imitate it in the production environment.
+                        writer.write(new ObjectMapper().writeValueAsString(Collections.singletonMap("token", UUID.randomUUID().toString())));
+                    }
+                })
+                .failureHandler(new AuthenticationEntryPointFailureHandler(
+                        new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)
+                )).and()
                 .apply(new CaptchaAuthenticationConfigurer())
+                .and()
+                .apply(new ContentCachingConfigurer<>(http.getSharedObject(ApplicationContext.class)))
                 .and()
                 .csrf(AbstractHttpConfigurer::disable);
 
