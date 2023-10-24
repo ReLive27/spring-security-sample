@@ -29,6 +29,7 @@ modules here cover many aspects of Spring Security.
 - [(stay tuned)Spring Security Uses FilterSecurityInterceptor to Implement Dynamic Authorization]()
 - [(stay tuned)Spring Security Uses AuthorizationFilter to Implement Dynamic Authorization]()
 - [(stay tuned)Spring Security Optimized Authorization Rules with TrieTree]()
+- [(stay tuned)Spring Security Combines jcasbin to Implement Authorization]()
 - [(stay tuned)Spring Security CSRF Protection]()
 - [(stay tuned)Spring Security Uses OPA to Make API Authorization Decisions]()
 - [(stay tuned)Securing Applications With Spring Security and Keycloak]()
