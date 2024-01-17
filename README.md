@@ -35,6 +35,12 @@ modules here cover many aspects of Spring Security.
 - [(stay tuned)Securing Applications With Spring Security and Keycloak]()
 - [(stay tuned)WebAuthn With Spring Security]()
 
+[comment]: <> (- [&#40;stay tuned&#41;Register a New User through GitHub using Spring Security]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;User Registration using Spring Security and Spring Boot]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;Activate a New Account via Email Using Spring Security]&#40;&#41;)
+
 ## Spring Version
 
 | Spring Boot   | Spring Cloud   |  Spring Security   |
