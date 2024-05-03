@@ -1,3 +1,4 @@
+![spring-security-sample](https://socialify.git.ci/ReLive27/spring-security-sample/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&stargazers=1&theme=Light)
 # <font size="6p">spring-security-sample</font>
 
 <p align="left">
@@ -34,6 +35,7 @@ modules here cover many aspects of Spring Security.
 - [(stay tuned)Spring Security Uses OPA to Make API Authorization Decisions]()
 - [(stay tuned)Securing Applications With Spring Security and Keycloak]()
 - [(stay tuned)WebAuthn With Spring Security]()
+- [(stay tuned)How to secure Spring Boot application with Google ReCAPTCHA?]()
 
 [comment]: <> (- [&#40;stay tuned&#41;Register a New User through GitHub using Spring Security]&#40;&#41;)
 
