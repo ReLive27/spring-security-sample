@@ -1,4 +1,4 @@
-package com.relive.authorization;
+package com.relive27.authorization;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
@@ -11,11 +11,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author: ReLive
+ * @author: ReLive27
  * @date: 2023/3/7 19:14
  */
 @Slf4j
-public class TireTree {
+public class TrieTree {
     private static final String URL_PATH_SPLIT = "/";
     private static Pattern pattern = Pattern.compile("\\{[A-Za-z0-9]+\\}");
     private static Pattern PATH_SPLIT_PATTERN = Pattern.compile("/+");
