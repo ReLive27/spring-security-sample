@@ -13,6 +13,7 @@
         <module>trietree-authorization</module>
         <module>graphic-captcha-login</module>
         <module>x509</module>
+        <module>webauthn</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -27,6 +28,7 @@
     <description>This module contains articles about Spring Security</description>
     <properties>
         <java.version>8</java.version>
+        <jedis.version>5.2.0</jedis.version>
     </properties>
 
     <dependencyManagement>
