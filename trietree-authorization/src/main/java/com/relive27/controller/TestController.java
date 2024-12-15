@@ -1,11 +1,11 @@
-package com.relive.controller;
+package com.relive27.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author: ReLive
+ * @author: ReLive27
  * @date: 2023/5/5 20:55
  */
 @RestController
