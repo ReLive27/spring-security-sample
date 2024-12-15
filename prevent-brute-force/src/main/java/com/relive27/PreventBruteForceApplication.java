@@ -1,16 +1,16 @@
-package com.relive;
+package com.relive27;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author: ReLive
- * @date: 2022/11/30 19:45
+ * @date: 2023/2/7 19:59
  */
 @SpringBootApplication
-public class CasLoginApplication {
+public class PreventBruteForceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CasLoginApplication.class, args);
+        SpringApplication.run(PreventBruteForceApplication.class, args);
     }
 }

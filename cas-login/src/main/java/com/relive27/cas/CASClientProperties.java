@@ -1,4 +1,4 @@
-package com.relive.cas;
+package com.relive27.cas;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
