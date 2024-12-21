@@ -27,8 +27,6 @@ modules here cover many aspects of Spring Security.
 - [(stay tuned)Spring Security One-time Token Verification]()
 - [(stay tuned)Using Spring Security to Implement Remote Notification for Authentication]()
 - [(stay tuned)Spring Security ACL Access Control]()
-- [(stay tuned)Spring Security Uses FilterSecurityInterceptor to Implement Dynamic Authorization]()
-- [(stay tuned)Spring Security Uses AuthorizationFilter to Implement Dynamic Authorization]()
 - [Spring Security Optimized Authorization Rules with TrieTree](https://github.com/ReLive27/spring-security-sample/tree/master/trietree-authorization)
 - [(stay tuned)Spring Security Combines jcasbin to Implement Authorization]()
 - [(stay tuned)Spring Security CSRF Protection]()
