@@ -29,6 +29,13 @@
     <properties>
         <java.version>8</java.version>
         <jedis.version>5.2.0</jedis.version>
+        <spring-security-cas.version>5.7.5</spring-security-cas.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
+        <totp.version>1.7.1</totp.version>
+        <webauthn4j-spring-security.version>0.10.0.RELEASE</webauthn4j-spring-security.version>
+        <mysql.version>8.0.32</mysql.version>
+        <flyway.version>8.5.13</flyway.version>
+        <lombok.version>1.18.26</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -44,12 +51,12 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.32</version>
+                <version>${mysql.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-mysql</artifactId>
-                <version>8.5.13</version>
+                <version>${flyway.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -77,7 +84,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.26</version>
+            <version>${lombok.version}</version>
         </dependency>
     </dependencies>
 

@@ -24,7 +24,7 @@
         <dependency>
             <groupId>dev.samstevens.totp</groupId>
             <artifactId>totp-spring-boot-starter</artifactId>
-            <version>1.7.1</version>
+            <version>${totp.version}</version>
         </dependency>
     </dependencies>
 
