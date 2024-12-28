@@ -20,7 +20,7 @@ modules here cover many aspects of Spring Security.
 - [(stay tuned)Spring Security LDAP Authentication]()
 - [Spring Security Persistence Remember-me](https://github.com/ReLive27/spring-security-sample/tree/master/remember-me)
 - [(stay tuned)Spring Security X.509 Authentication]()
-- [(stay tuned)Spring Security CAS Single Sign-on]()
+- [Spring Security CAS Single Sign-on](https://github.com/ReLive27/spring-security-sample/tree/master/cas-login)
 - [(stay tuned)Spring Security SAML and Database Authentication]()
 - [(stay tuned)Spring Security Restricts Single User Login of the Same Account]()
 - [(stay tuned)Spring Security Graphic Captcha Login]()
