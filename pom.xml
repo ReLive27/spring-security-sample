@@ -35,6 +35,7 @@
         <totp.version>1.7.1</totp.version>
         <webauthn4j-spring-security.version>0.10.0.RELEASE</webauthn4j-spring-security.version>
         <jcasbin.version>1.78.0</jcasbin.version>
+        <jcasbin-adapter.version>2.10.0</jcasbin-adapter.version>
         <mysql.version>8.0.32</mysql.version>
         <flyway.version>8.5.13</flyway.version>
         <lombok.version>1.18.26</lombok.version>

@@ -18,9 +18,23 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.casbin</groupId>
             <artifactId>jcasbin</artifactId>
             <version>${jcasbin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.casbin</groupId>
+            <artifactId>jdbc-adapter</artifactId>
+            <version>${jcasbin-adapter.version}</version>
         </dependency>
     </dependencies>
 </project>
