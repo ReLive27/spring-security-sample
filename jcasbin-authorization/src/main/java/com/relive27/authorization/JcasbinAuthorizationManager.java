@@ -31,6 +31,8 @@ public class JcasbinAuthorizationManager implements AuthorizationManager<Request
     // URL 路径Helper，用于从 HttpServletRequest 提取路径
     private final UrlPathHelper urlPathHelper = new UrlPathHelper();
 
+    private volatile boolean lazyInit = true;
+
     // 用于保证策略加载线程安全的锁
     private final Object lock = new Object();
 
@@ -79,14 +81,19 @@ public class JcasbinAuthorizationManager implements AuthorizationManager<Request
      */
     private boolean isAuthorized(Authentication authentication, HttpServletRequest request) {
         // 双重检查锁确保策略仅加载一次，提升性能
-        if (CollectionUtils.isEmpty(enforcer.getPolicy())) {
-            synchronized (lock) {
-                if (CollectionUtils.isEmpty(enforcer.getPolicy())) {
-                    try {
-                        enforcer.loadPolicy(); // 加载策略
-                    } catch (Exception e) {
-                        log.error("加载策略失败，请检查配置", e);
-                        return false;
+        if (this.lazyInit) {
+            if (CollectionUtils.isEmpty(enforcer.getPolicy())) {
+                synchronized (lock) {
+                    if (CollectionUtils.isEmpty(enforcer.getPolicy())) {
+                        try {
+                            enforcer.loadPolicy(); // 加载策略
+                            if (!CollectionUtils.isEmpty(enforcer.getPolicy())) {
+                                this.lazyInit = false;
+                            }
+                        } catch (Exception e) {
+                            log.error("加载策略失败，请检查配置", e);
+                            return false;
+                        }
                     }
                 }
             }
