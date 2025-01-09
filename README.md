@@ -16,31 +16,46 @@ modules here cover many aspects of Spring Security.
 ## Relevant Articles:
 
 - [Spring Security Multi-Factor Authentication (MFA)](https://relive27.github.io/blog/spring-security-mfa)
-- [(stay tuned)Prevent Brute Force Authentication Attempts with Spring Security]()
-- [(stay tuned)Spring Security LDAP Authentication]()
+
+[comment]: <> (- [&#40;stay tuned&#41;Prevent Brute Force Authentication Attempts with Spring Security]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;Spring Security LDAP Authentication]&#40;&#41;)
 - [Spring Security Persistence Remember-me](https://github.com/ReLive27/spring-security-sample/tree/master/remember-me)
-- [(stay tuned)Spring Security X.509 Authentication]()
+
+[comment]: <> (- [&#40;stay tuned&#41;Spring Security X.509 Authentication]&#40;&#41;)
 - [Spring Security CAS Single Sign-on](https://github.com/ReLive27/spring-security-sample/tree/master/cas-login)
-- [(stay tuned)Spring Security SAML and Database Authentication]()
-- [(stay tuned)Spring Security Restricts Single User Login of the Same Account]()
-- [(stay tuned)Spring Security Graphic Captcha Login]()
-- [(stay tuned)Spring Security One-time Token Verification]()
-- [(stay tuned)Using Spring Security to Implement Remote Notification for Authentication]()
-- [(stay tuned)Spring Security ACL Access Control]()
+
+[comment]: <> (- [&#40;stay tuned&#41;Spring Security SAML and Database Authentication]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;Spring Security Restricts Single User Login of the Same Account]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;Spring Security Graphic Captcha Login]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;Spring Security One-time Token Verification]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;Using Spring Security to Implement Remote Notification for Authentication]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;Spring Security ACL Access Control]&#40;&#41;)
 - [Spring Security Optimized Authorization Rules with TrieTree](https://github.com/ReLive27/spring-security-sample/tree/master/trietree-authorization)
-- [(stay tuned)Spring Security Combines jcasbin to Implement Authorization]()
-- [(stay tuned)Spring Security CSRF Protection]()
-- [(stay tuned)Spring Security Uses OPA to Make API Authorization Decisions]()
-- [(stay tuned)Securing Applications With Spring Security and Keycloak]()
-- [(stay tuned)WebAuthn With Spring Security]()
-- [(stay tuned)How to secure Spring Boot application with Google ReCAPTCHA?]()
+
+[comment]: <> (- [&#40;stay tuned&#41;Spring Security Combines jcasbin to Implement Authorization]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;Spring Security CSRF Protection]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;Spring Security Uses OPA to Make API Authorization Decisions]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;Securing Applications With Spring Security and Keycloak]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;WebAuthn With Spring Security]&#40;&#41;)
+
+[comment]: <> (- [&#40;stay tuned&#41;How to secure Spring Boot application with Google ReCAPTCHA?]&#40;&#41;)
 
 [comment]: <> (- [&#40;stay tuned&#41;Register a New User through GitHub using Spring Security]&#40;&#41;)
 
 [comment]: <> (- [&#40;stay tuned&#41;User Registration using Spring Security and Spring Boot]&#40;&#41;)
 
 [comment]: <> (- [&#40;stay tuned&#41;Activate a New Account via Email Using Spring Security]&#40;&#41;)
-
+- ...
 ## Spring Version
 
 | Spring Boot   | Spring Cloud   |  Spring Security   |
