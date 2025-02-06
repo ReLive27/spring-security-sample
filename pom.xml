@@ -39,6 +39,7 @@
         <mysql.version>8.0.32</mysql.version>
         <flyway.version>8.5.13</flyway.version>
         <lombok.version>1.18.26</lombok.version>
+        <nimbus-jose-jwt.version>9.22</nimbus-jose-jwt.version>
     </properties>
 
     <dependencyManagement>
