@@ -26,5 +26,5 @@ spring:
         service: http://localhost:9528/login/callback
 ```
 
-You can modify `cas-server-urll`, `cas-server-login-url`, and `service` according to your setup.
+You can modify `cas-server-url`, `cas-server-login-url`, and `service` according to your setup.
 
