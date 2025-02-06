@@ -14,7 +14,7 @@ spring:
         # CAS 服务器的登录 URL，指向 CAS 认证登录页面
         cas-server-login-url: http://localhost:8443/cas/login
         # 当前应用需要进行 CAS 验证的服务 URL
-        service: http://localhost:8080/login/cas
+        service: http://localhost:9528/login/callback
 
 
 

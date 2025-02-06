@@ -2,23 +2,25 @@ package com.relive27.cas.client;
 
 import com.relive27.cas.client.registration.CasClientRegistration;
 import com.relive27.cas.client.registration.CasClientRegistrationRepository;
+import com.relive27.handler.SimpleLogoutSuccessHandler;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.ssl.HttpURLConnectionFactory;
 import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
-import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -60,6 +62,8 @@ public class CASAuthorizationConfiguration extends AbstractHttpConfigurer<CASAut
 
     //客户端登出URL
     private String logoutUrl;
+    //成功认证后的处理器
+    private AuthenticationSuccessHandler successHandler;
 
     /**
      * 客户端cas 登录URL，用于处理Ticket
@@ -80,6 +84,20 @@ public class CASAuthorizationConfiguration extends AbstractHttpConfigurer<CASAut
      */
     public CASAuthorizationConfiguration logoutUrl(String logoutUrl) {
         this.logoutUrl = logoutUrl;
+        return this;
+    }
+
+    /**
+     * 设置认证成功后的处理器。
+     * <p>
+     * 此方法用于配置在用户成功认证后执行的操作。通过传入一个 {@link AuthenticationSuccessHandler}，
+     * </p>
+     *
+     * @param successHandler 认证成功后的处理器，通常用于定义认证成功后的行为。
+     * @return 返回当前的 {@link CASAuthorizationConfiguration} 对象，支持链式调用。
+     */
+    public CASAuthorizationConfiguration successHandler(AuthenticationSuccessHandler successHandler) {
+        this.successHandler = successHandler;
         return this;
     }
 
@@ -150,6 +168,9 @@ public class CASAuthorizationConfiguration extends AbstractHttpConfigurer<CASAut
         if (StringUtils.hasText(this.loginCasUrl)) {
             casAuthenticationFilter.setFilterProcessesUrl(this.loginCasUrl);
         }
+        if (this.successHandler != null) {
+            casAuthenticationFilter.setAuthenticationSuccessHandler(successHandler);
+        }
 
         // 将 CAS 认证过滤器添加到 Spring Security 过滤链中
         http.addFilterBefore(this.postProcess(casAuthenticationFilter), UsernamePasswordAuthenticationFilter.class);
@@ -166,7 +187,7 @@ public class CASAuthorizationConfiguration extends AbstractHttpConfigurer<CASAut
         http.addFilterBefore(this.postProcess(singleSignOutFilter), CasAuthenticationFilter.class);
 
         // 配置登出过滤器
-        LogoutFilter logoutFilter = new LogoutFilter(casClientRegistration.getCasServerLogoutUrl() + "?service=" + casClientRegistration.getService(), new SecurityContextLogoutHandler());
+        LogoutFilter logoutFilter = new LogoutFilter(new SimpleLogoutSuccessHandler(casClientRegistration.getCasServerLogoutUrl() + "?service=" + casClientRegistration.getService()), new SecurityContextLogoutHandler());
         if (StringUtils.hasText(this.logoutUrl)) {
             logoutFilter.setFilterProcessesUrl(this.logoutUrl);
         }
@@ -179,16 +200,17 @@ public class CASAuthorizationConfiguration extends AbstractHttpConfigurer<CASAut
      * 获取 CAS 认证入口点，配置 CAS 登录 URL 和服务属性。
      *
      * @param httpSecurity {@link HttpSecurity} 对象，用于配置 Spring Security。
-     * @return {@link CasAuthenticationEntryPoint} 实例。
+     * @return {@link CasJsonAuthenticationEntryPoint} 实例。
      */
-    public static CasAuthenticationEntryPoint getCasAuthenticationEntryPoint(HttpSecurity httpSecurity) {
+    public static CasJsonAuthenticationEntryPoint getCasAuthenticationEntryPoint(HttpSecurity httpSecurity) {
         CasClientRegistrationRepository casClientRegistrationRepository = getCasClientRegistrationRepository(httpSecurity);
         CasClientRegistration registration = casClientRegistrationRepository.loadClientRegistration();
 
         // 配置 CAS 认证入口点
-        CasAuthenticationEntryPoint casAuthenticationEntryPoint = new CasAuthenticationEntryPoint();
+        CasJsonAuthenticationEntryPoint casAuthenticationEntryPoint = new CasJsonAuthenticationEntryPoint();
         casAuthenticationEntryPoint.setLoginUrl(registration.getCasServerLoginUrl());
         casAuthenticationEntryPoint.setServiceProperties(createServiceProperties(httpSecurity, registration));
+        casAuthenticationEntryPoint.setHttpStatus(HttpStatus.OK);
         return casAuthenticationEntryPoint;
     }
 

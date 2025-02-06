@@ -1,6 +1,13 @@
 package com.relive27.config;
 
+import com.nimbusds.jose.jwk.JWKSelector;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
 import com.relive27.cas.client.CASAuthorizationConfiguration;
+import com.relive27.handler.NimbusJwtLoginAuthenticationHandler;
+import com.relive27.jose.Jwks;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -36,7 +43,9 @@ public class SecurityConfig {
                 // 配置表单登录，使用默认设置
                 .formLogin(Customizer.withDefaults())
                 // 应用自定义的 CAS 认证配置
-                .apply(new CASAuthorizationConfiguration());
+                .apply(new CASAuthorizationConfiguration()
+                        .successHandler(new NimbusJwtLoginAuthenticationHandler(
+                                CASAuthorizationConfiguration.getOptionalBean(http, JWKSource.class))));
 
         // 配置异常处理，指定当用户未认证时，跳转到 CAS 的认证入口
         http.exceptionHandling(e ->
@@ -61,4 +70,24 @@ public class SecurityConfig {
         // 返回一个内存中的用户详细信息管理器，包含一个用户
         return new InMemoryUserDetailsManager(user);
     }
+
+    /**
+     * 创建一个 {@link JWKSource} Bean，用于提供 RSA 密钥的 JWK 集合。
+     * <p>
+     * 该方法生成一个 RSA 密钥对，并将其封装为 {@link JWKSet} 对象。然后，使用该对象创建一个 {@link JWKSource}，
+     * 该 {@link JWKSource} 可以根据传入的选择器（{@link JWKSelector}）返回合适的 JWK（JSON Web Key）。
+     * </p>
+     *
+     * @return 返回一个 {@link JWKSource}，用于从 RSA 密钥集合中选择适当的 JWK。
+     */
+    @Bean
+    public JWKSource<SecurityContext> jwkSource() {
+        // 生成 RSA 密钥对
+        RSAKey rsaKey = Jwks.generateRsa();
+        // 将 RSA 密钥封装成 JWK 集合
+        JWKSet jwkSet = new JWKSet(rsaKey);
+        // 创建并返回 JWKSource，使用选择器选择合适的 JWK
+        return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
+    }
+
 }
